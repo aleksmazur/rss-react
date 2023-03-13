@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "title": "Money Tree",
+        "style": "Money Tree",
+        "size": "Medium",
+        "raiting": 5,
+        "description": "Bring home a beautiful Money Tree for a tropical feel. Pachira houseplants are lush and green, ready to liven up your room decor. Money Tree is gorgeous on any tabletop, shelf, plant stand, or in any living room, office, and bedroom",
+        "care": "Bright, Indirect Light, Water Weekly",
+        "img": "./src/assets/img/plants/1/money-tree.jpg"
+    },
+    {
+        "id": 2,
+        "title": "Cat Palm",
+        "style": "Cat Palm",
+        "size": "2-3 Feet Tall",
+        "raiting": 5,
+        "description": "Cat Palm comes planted in a 10-inch modern decor pot—a very contemporary look! This healthy plant ships at a minimum of 34 inches tall, measuring from the bottom of the pot. Ships fast, direct from our farm to your home!",
+        "care": "Bright, Indirect Sunlight; Water 2-3 cups once a week",
+        "img": "./src/assets/img/plants/2/cat-palm.jpg"
+    },
+    {
+        "id": 1,
+        "title": "Money Tree",
+        "style": "Money Tree",
+        "size": "Medium",
+        "raiting": 5,
+        "description": "Bring home a beautiful Money Tree for a tropical feel. Pachira houseplants are lush and green, ready to liven up your room decor. Money Tree is gorgeous on any tabletop, shelf, plant stand, or in any living room, office, and bedroom",
+        "care": "Bright, Indirect Light, Water Weekly",
+        "img": "./src/assets/img/plants/1/money-tree.jpg"
+    },
+    {
+        "id": 2,
+        "title": "Cat Palm",
+        "style": "Cat Palm",
+        "size": "2-3 Feet Tall",
+        "raiting": 5,
+        "description": "Cat Palm comes planted in a 10-inch modern decor pot—a very contemporary look! This healthy plant ships at a minimum of 34 inches tall, measuring from the bottom of the pot. Ships fast, direct from our farm to your home!",
+        "care": "Bright, Indirect Sunlight; Water 2-3 cups once a week",
+        "img": "./src/assets/img/plants/2/cat-palm.jpg"
+    }
+]

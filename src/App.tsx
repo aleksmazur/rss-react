@@ -3,9 +3,9 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
-import Main from './components/main/Main';
-import About from './components/about/About';
-import NotFound from './components/notFound/NotFound';
+import Main from './pages/main/Main';
+import About from './pages/about/About';
+import NotFound from './pages/notFound/NotFound';
 
 class App extends React.Component {
   render() {

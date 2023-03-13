@@ -1,7 +1,7 @@
-import React from 'react';
+import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
-class Nav extends React.Component {
+class Nav extends Component {
   render() {
     return (
       <div className="nav">
