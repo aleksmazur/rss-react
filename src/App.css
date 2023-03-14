@@ -15,9 +15,11 @@
 .content {
     height: 84vh;
     padding: 0 1rem;
-    background: url('./assets/img/bg.jpeg') no-repeat;
-    color: antiquewhite;
+    background: url('./assets/img/bg.jpeg') center/cover;
+    color: rgb(253, 248, 242);
     font-size: 20px;
+    min-height: 84vh;
+    height: 100%;
 }
 
 /* .content:before {
