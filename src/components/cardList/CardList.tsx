@@ -8,7 +8,6 @@ class CardList extends Component {
 
     return (
       <div className="main__cards">
-        <h2>Our Home Plants</h2>
         <div className="card__list">
           {plants.map((plant) => (
             <div key={plant.id} className="card__item">
@@ -40,10 +39,10 @@ class CardList extends Component {
               </div>
               <p className="card__item-descr">{plant.care}</p>
               <div className="card__item-about">
-                <p>{plant.size}</p>
                 <p>{plant.style}</p>
-                <p>{plant.raiting}/5</p>
+                <p>{plant.size}</p>
               </div>
+              <p>{plant.raiting}/5</p>
               <button>See more</button>
             </div>
           ))}

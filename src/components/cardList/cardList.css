@@ -3,8 +3,8 @@
 }
 
 .card__list {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     justify-content: space-between;
 }
@@ -16,17 +16,21 @@
 	background-color:rgba(0, 0, 0, .7);
     padding: 10px;
     border-radius: 8px;
+    width: 220px;
 }
 
 .card__item p {
-    margin: 0.4rem 0;
+    margin: 0;
+    text-align: left;
+    font-size: 1rem;
 }
 
 .card__img {
     object-fit: cover;
-    width: 100%;
+    width: 200px;
     height: 200px;
     border-radius: 8px;
+    margin: 0 auto;
 }
 
 .card__item-about {
@@ -49,12 +53,12 @@
 .card__item-main {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     font-size: 1.2rem;
     text-align: left;
 }
 
 .card__item-like {
+    margin: 0.4rem 0;
     width: 30px;
     height: 30px;
     cursor: pointer;

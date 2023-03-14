@@ -29,7 +29,7 @@
         "raiting": 4,
         "description": "Bring home a beautiful Peace Lily to add a relaxing, calm feel to any space. These houseplants are natural air purifiers that help keep your indoor air fresh and clean. Easily fits tabletop, shelf, living room, office, or bedroom decor",
         "care": "Partial Sun",
-        "img": "./src/assets/img/plants/3/lily-plant.jpg",
+        "img": "/plants/3/lily-plant.jpg",
         "like": false
     },
     {

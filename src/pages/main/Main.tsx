@@ -7,6 +7,7 @@ class Main extends Component {
     return (
       <div>
         Main
+        <h2>Our Home Plants</h2>
         <SearchPanel />
         <CardList />
       </div>

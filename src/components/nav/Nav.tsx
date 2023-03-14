@@ -12,9 +12,6 @@ class Nav extends Component {
           <li className="nav__li">
             <NavLink to={'about'}>About</NavLink>
           </li>
-          <li className="nav__li">
-            <NavLink to={'quiz'}>Quiz</NavLink>
-          </li>
         </ul>
       </div>
     );
