@@ -5,13 +5,13 @@ class SearchPanel extends Component {
     inputText: '',
   };
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.setState({
       inputText: localStorage.getItem('search'),
     });
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     if (this.state.inputText) {
       localStorage.setItem('search', this.state.inputText);
     }

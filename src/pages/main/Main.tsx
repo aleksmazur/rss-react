@@ -6,8 +6,7 @@ class Main extends Component {
   render() {
     return (
       <div>
-        Main
-        <h2>Our Home Plants</h2>
+        <h2 className="section__title">Our Home Plants</h2>
         <SearchPanel />
         <CardList />
       </div>

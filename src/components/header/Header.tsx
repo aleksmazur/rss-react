@@ -3,7 +3,7 @@ import logo from '../../assets/img/logo.webp';
 import { NavLink } from 'react-router-dom';
 import Nav from '../nav/Nav';
 
-class Header extends Component {
+class Header extends Component<{ title: string }> {
   render() {
     return (
       <div className="header">
@@ -13,6 +13,7 @@ class Header extends Component {
             <div style={{ color: 'rgb(33 71 43)' }}>GreenPlant</div>
           </div>
         </NavLink>
+        {this.props.title}
         <Nav />
       </div>
     );
