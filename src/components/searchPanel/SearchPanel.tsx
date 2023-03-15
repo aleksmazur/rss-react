@@ -34,7 +34,7 @@ class SearchPanel extends Component {
           name="searchBar"
           type="text"
           placeholder="Search.."
-          value={inputText}
+          value={inputText ? inputText : ''}
           onChange={this.handleInputChange}
         />
         <button className="btn search__btn">Search</button>

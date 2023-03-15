@@ -2,7 +2,7 @@ import { Component } from 'react';
 import Footer from '../footer/Footer';
 import Header from '../header/Header';
 
-type RoutePropsType = {
+export type RoutePropsType = {
   path: string;
   title: string;
   component: JSX.Element;
