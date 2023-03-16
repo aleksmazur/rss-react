@@ -1,20 +1,22 @@
 import { Component } from 'react';
+import { getMonth } from '../../utils/getMonth';
 
 type PropsType = {
   id: number;
   title: string;
-  style: string;
   size: string;
   raiting: number;
   description: string;
-  care: string;
+  care: string[];
+  indoorOutdoor: string;
+  blooming: string;
   img: string;
   like?: boolean;
 };
 
 class CardItem extends Component<PropsType> {
   render() {
-    const { id, img, title, like, size, style, raiting, care } = this.props;
+    const { id, img, title, like, size, raiting, care, blooming, indoorOutdoor } = this.props;
     return (
       <div key={id} className="card__item">
         <img src={img} alt="photo" className="card__img" />
@@ -43,12 +45,18 @@ C84.22,38.589,83.329,41.596,81.643,44.248z"
             </svg>
           </div>
         </div>
-        <p className="card__item-descr">{care}</p>
         <div className="card__item-about">
-          <p>{style}</p>
+          <p>{indoorOutdoor}</p>
           <p>{size}</p>
         </div>
-        <p>{raiting}/5</p>
+        <p className="card__item-descr">{care.join(', ')}</p>
+        <div className="card__item-about">
+          <p>Start blooming period: </p>
+          <p>{getMonth(new Date(blooming).getMonth())}</p>
+        </div>
+        <div className="card__item-about">
+          <p>{raiting}/5</p>
+        </div>
         <button>See more</button>
       </div>
     );
