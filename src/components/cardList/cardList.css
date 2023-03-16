@@ -1,7 +1,3 @@
-.main__cards {
-    padding-bottom: 20px;
-}
-
 .card__list {
     display: flex;
     flex-wrap: wrap;

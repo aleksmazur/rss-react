@@ -1,0 +1,33 @@
+.addPlant__form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    align-items: flex-start;
+    background-color: rgba(0, 0, 0, .7);
+    padding: 10px;
+    border-radius: 8px;
+    gap: 10px;
+    margin: 0 auto;
+}
+
+.addPlant__form label {
+    display: flex;
+    gap: 10px;
+}
+
+.form__section-care {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.form__section-care p {
+    margin: 0;
+    text-align: left;
+}
+
+.form__checkbox-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}

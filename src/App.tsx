@@ -5,12 +5,18 @@ import Main from './pages/main/Main';
 import About from './pages/about/About';
 import NotFound from './pages/notFound/NotFound';
 import PageWrapper from './components/pageWrapper/PageWrapper';
+import Form from './pages/form/Form';
 
 const routes = [
   {
     path: '/',
     title: 'Main',
     component: <Main />,
+  },
+  {
+    path: 'form',
+    title: 'Form',
+    component: <Form />,
   },
   {
     path: 'about',
