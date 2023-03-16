@@ -15,6 +15,16 @@
     gap: 10px;
 }
 
+.addPlant__form input, .addPlant__form select, .addPlant__form textarea {
+    border-radius: 4px;
+    border: none;
+    padding: 0.4rem;
+}
+
+option:hover {
+    background-color: rgb(157, 104, 7);
+}
+
 .form__section-care {
     display: flex;
     align-items: flex-start;

@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import './checkbox.css';
+
 type PropsType = {
   value: boolean;
   label: string;
@@ -8,10 +10,10 @@ class Checkbox extends Component<PropsType> {
   render() {
     const { value, label } = this.props;
     return (
-      <label>
-        <input type="checkbox" checked={value} />
-        {label}
-      </label>
+      <>
+        <input type="checkbox" className="form__checkbox" id="care__check" checked={value} />
+        <label htmlFor="care__check">{label}</label>
+      </>
     );
   }
 }
