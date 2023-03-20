@@ -8,6 +8,7 @@
     border-radius: 8px;
     gap: 10px;
     margin: 0 auto;
+    margin-bottom: 10px;
 }
 
 .addPlant__form label {
@@ -19,6 +20,7 @@
     border-radius: 4px;
     border: none;
     padding: 0.4rem;
+    outline: 0;
 }
 
 option:hover {

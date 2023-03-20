@@ -6,7 +6,7 @@ type PropsType = {
   name: string;
   options: number[] | string[];
   value: number | string;
-  ref: string;
+  ref: React.Ref<HTMLSelectElement>;
   onChange(event: React.FormEvent<HTMLSelectElement>): void;
 };
 

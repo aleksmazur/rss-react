@@ -6,7 +6,7 @@ type PropsType = {
   value2: string;
   value: boolean;
   label: string;
-  ref: React.RefObject<HTMLInputElement>;
+  ref: React.Ref<HTMLInputElement>;
   onChange(): void;
 };
 
@@ -18,14 +18,7 @@ class Switcher extends Component<PropsType> {
         {label}
         <span className="value1">{value1}</span>
         <div className="switcher">
-          <input
-            id="toggler"
-            type="checkbox"
-            checked={value}
-            ref={ref}
-            onChange={onChange}
-            readOnly
-          />
+          <input id="toggler" type="radio" checked={value} ref={ref} onChange={onChange} readOnly />
           <span className="slider" />
           <span className="wave" />
         </div>

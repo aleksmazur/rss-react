@@ -6,7 +6,7 @@ type PropsType = {
   type: string;
   placeholder: string;
   value: string;
-  ref: React.LegacyRef<HTMLInputElement>;
+  ref: React.Ref<HTMLInputElement>;
   onChange(event: React.FormEvent<HTMLInputElement>): void;
 };
 

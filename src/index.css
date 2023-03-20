@@ -50,6 +50,7 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: all 0.4s;
+  outline: 0;
 }
 button:hover {
   border-color: rgb(207, 142, 23);
