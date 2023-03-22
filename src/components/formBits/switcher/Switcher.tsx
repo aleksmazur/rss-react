@@ -1,29 +1,32 @@
 import { Component } from 'react';
-import './switcher.css';
+// import './switcher.css';
 
 type PropsType = {
   value1: string;
   value2: string;
-  value: boolean;
   label: string;
-  ref: React.Ref<HTMLInputElement>;
-  onChange(): void;
+  name: string;
+  inputRef1: React.Ref<HTMLInputElement>;
+  inputRef2: React.Ref<HTMLInputElement>;
 };
 
 class Switcher extends Component<PropsType> {
   render() {
-    const { value1, value2, label, value, ref, onChange } = this.props;
+    const { value1, value2, label, name, inputRef1, inputRef2 } = this.props;
     return (
-      <label className="switch">
-        {label}
-        <span className="value1">{value1}</span>
-        <div className="switcher">
-          <input id="toggler" type="radio" checked={value} ref={ref} onChange={onChange} readOnly />
-          <span className="slider" />
-          <span className="wave" />
+      <div className="switch">
+        <p>{label}</p>
+        <div className="form__radio-group">
+          <label>
+            {value1}
+            <input type="radio" name={name} value={value1} ref={inputRef1} />
+          </label>
+          <label>
+            {value2}
+            <input type="radio" name={name} value={value2} ref={inputRef2} />
+          </label>
         </div>
-        <span className="value2">{value2}</span>
-      </label>
+      </div>
     );
   }
 }

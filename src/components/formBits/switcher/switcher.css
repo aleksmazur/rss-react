@@ -1,10 +1,9 @@
 .switch {
-    display: flex;
-}
-
-.switcher {
-    position: relative;
     width: 70px;
+    height: 30px;
+    transform: translate(0%, -50%);
+    display: block;
+    margin: 50px 0 0px 0;
 }
 
 #toggler {
@@ -19,7 +18,7 @@
     left: 0;
     z-index: 1;
     overflow: hidden;
-    background-color: rgb(33, 71, 43);
+    background-color: #00243a;
     border-radius: 50px;
     cursor: pointer;
     transition: all 1.4s;
@@ -53,7 +52,7 @@
     background-color: transparent;
 }
 #toggler:checked + .slider:before, #toggler:checked + .slider:after {
-    transform: translateX(40px);
+    transform: translateX(35px);
     background-color: white;
 }
 #toggler:checked + .slider:after {
@@ -61,5 +60,5 @@
 }
 #toggler:checked ~ .wave {
     display: block;
-    background-color: rgb(207, 142, 23);
+    background-color: #f1d760;
 }

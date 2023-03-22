@@ -3,20 +3,17 @@ import './select.css';
 
 type PropsType = {
   label: string;
-  name: string;
   options: number[] | string[];
-  value: number | string;
-  ref: React.Ref<HTMLSelectElement>;
-  onChange(event: React.FormEvent<HTMLSelectElement>): void;
+  inputRef: React.Ref<HTMLSelectElement>;
 };
 
 class Select extends Component<PropsType> {
   render() {
-    const { label, name, options, value, ref, onChange } = this.props;
+    const { label, options, inputRef } = this.props;
     return (
       <label>
         {label}
-        <select name={name} value={value} ref={ref} onChange={onChange}>
+        <select ref={inputRef} className="select">
           {options.map((option, index) => {
             return (
               <option key={index} value={option}>

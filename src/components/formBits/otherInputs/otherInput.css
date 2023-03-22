@@ -1,0 +1,14 @@
+input[type="month"]{
+    background-color: rgb(207, 142, 23);
+    padding: 8px;
+    color: rgb(246, 246, 246);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+::-webkit-calendar-picker-indicator{
+    background-color:  rgb(246, 246, 246);
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}

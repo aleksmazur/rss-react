@@ -1,5 +1,9 @@
 import React from 'react';
 import { CardPropsType } from '../cardItem/CardItem';
+import Checkbox from '../formBits/checkbox/Checkbox';
+import OtherInput from '../formBits/otherInputs/OtherInput';
+import Select from '../formBits/select/Select';
+import Switcher from '../formBits/switcher/Switcher';
 import './form.css';
 
 type TypeProps = {
@@ -8,7 +12,7 @@ type TypeProps = {
 
 class FormItem extends React.Component<TypeProps, object> {
   titleRef = React.createRef<HTMLInputElement>();
-  descrRef = React.createRef<HTMLTextAreaElement>();
+  descrRef = React.createRef<HTMLInputElement>();
   bloomingRef = React.createRef<HTMLInputElement>();
   sizeRef = React.createRef<HTMLSelectElement>();
   careBrightRef = React.createRef<HTMLInputElement>();
@@ -22,6 +26,16 @@ class FormItem extends React.Component<TypeProps, object> {
   placeIndoorRef = React.createRef<HTMLInputElement>();
   placeOutdoorRef = React.createRef<HTMLInputElement>();
   fileRef = React.createRef<HTMLInputElement>();
+
+  careOptions = [
+    { label: 'Bright', ref: this.careBrightRef },
+    { label: 'Sun', ref: this.careSunRef },
+    { label: 'Shade', ref: this.careShadeRef },
+    { label: 'Sandy', ref: this.careSandyRef },
+    { label: 'Soil', ref: this.careSoilRef },
+    { label: 'WaterDaily', ref: this.careWaterDailyRef },
+    { label: 'WaterWeekly', ref: this.careWaterWeeklyRef },
+  ];
 
   handleSubmit: React.ChangeEventHandler<HTMLFormElement> = (e) => {
     const { addCard } = this.props;
@@ -43,14 +57,18 @@ class FormItem extends React.Component<TypeProps, object> {
         .filter((el) => el[1] === true)
         .flat()
         .filter((el) => typeof el !== 'boolean'),
-      place: this.placeIndoorRef.current?.checked
+      place: this.placeOutdoorRef.current?.checked
+        ? this.placeOutdoorRef.current?.value
+        : this.placeIndoorRef.current?.checked
         ? this.placeIndoorRef.current?.value
-        : this.placeOutdoorRef.current?.value,
+        : undefined,
       blooming: this.bloomingRef.current?.value,
       raiting: Number(this.raitingRef.current?.value),
       img: file ? URL.createObjectURL(file) : undefined,
     };
+    console.log(card);
     addCard(card);
+    e.target.reset();
   };
 
   render() {
@@ -58,92 +76,49 @@ class FormItem extends React.Component<TypeProps, object> {
       <div>
         <h2 className="section__title">Add new Plant</h2>
         <form className="addPlant__form" onSubmit={this.handleSubmit}>
-          <label>
-            Title:
-            <input type="text" placeholder="Add title" ref={this.titleRef} required />
-          </label>
-          <label>
-            Description:
-            <textarea placeholder="Add description" ref={this.descrRef} />
-          </label>
-          <label>
-            Size:
-            <select name="size" ref={this.sizeRef}>
-              {['Mini', 'Medium', 'Maxi'].map((option, index) => {
-                return (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-                );
-              })}
-            </select>
-          </label>
-          <div className="form__section-care">
-            <p>Care:</p>
-            <div className="form__checkbox-group">
-              <label>
-                Bright
-                <input type="checkbox" className="form__checkbox" ref={this.careBrightRef} />
-              </label>
-              <label>
-                Sun
-                <input type="checkbox" className="form__checkbox" ref={this.careSunRef} />
-              </label>
-              <label>
-                Shade
-                <input type="checkbox" className="form__checkbox" ref={this.careShadeRef} />
-              </label>
-              <label>
-                Soil
-                <input type="checkbox" className="form__checkbox" ref={this.careSoilRef} />
-              </label>
-              <label>
-                Sandy
-                <input type="checkbox" className="form__checkbox" ref={this.careSandyRef} />
-              </label>
-              <label>
-                Water Daily
-                <input type="checkbox" className="form__checkbox" ref={this.careWaterDailyRef} />
-              </label>
-              <label>
-                Water Weekly
-                <input type="checkbox" className="form__checkbox" ref={this.careWaterWeeklyRef} />
-              </label>
-            </div>
-          </div>
-          <div className="switch">
-            <p>Place:</p>
-            <div className="form__radio-group">
-              <label>
-                Outdoor
-                <input type="radio" name="place" value="Outdoor" ref={this.placeOutdoorRef} />
-              </label>
-              <label>
-                Indoor
-                <input type="radio" name="place" value="Indoor" ref={this.placeIndoorRef} />
-              </label>
-            </div>
-          </div>
-          <label>
-            Blooming period:
-            <input type="date" ref={this.bloomingRef} />
-          </label>
-          <label>
-            Raiting:
-            <select name="size" ref={this.raitingRef}>
-              {[1, 2, 3, 4, 5].map((option, index) => {
-                return (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-                );
-              })}
-            </select>
-          </label>
-          <label>
-            Image:
-            <input type="file" accept="image/*" name="img" ref={this.fileRef} />
-          </label>
+          <OtherInput
+            label={'Title:'}
+            type={'text'}
+            placeholder={'Add title'}
+            required={true}
+            inputRef={this.titleRef}
+          />
+          <OtherInput
+            label={'Description:'}
+            type={'text'}
+            placeholder={'Add description'}
+            required={false}
+            inputRef={this.descrRef}
+          />
+          <Select label={'Size:'} options={['Mini', 'Medium', 'Maxi']} inputRef={this.sizeRef} />
+          {this.careOptions.map(
+            (el: { label: string; ref: React.Ref<HTMLInputElement> }, index: number) => {
+              return <Checkbox label={el.label} inputRef={el.ref} key={index} />;
+            }
+          )}
+          <Switcher
+            value1={'Outdoor'}
+            value2={'Indoor'}
+            label={'Place:'}
+            name={'place'}
+            inputRef1={this.placeOutdoorRef}
+            inputRef2={this.placeIndoorRef}
+          />
+          <OtherInput
+            label={'Blooming period:'}
+            type={'month'}
+            placeholder={''}
+            required={false}
+            inputRef={this.bloomingRef}
+          />
+          <Select label={'Raiting:'} options={[1, 2, 3, 4, 5]} inputRef={this.raitingRef} />
+          <OtherInput
+            label={'Image:'}
+            type={'file'}
+            placeholder={''}
+            required={false}
+            inputRef={this.fileRef}
+          />
           <button type="submit">Add Plant</button>
         </form>
       </div>

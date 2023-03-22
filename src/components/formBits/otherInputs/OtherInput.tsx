@@ -5,25 +5,17 @@ type PropsType = {
   label: string;
   type: string;
   placeholder: string;
-  value: string;
-  ref: React.Ref<HTMLInputElement>;
-  onChange(event: React.FormEvent<HTMLInputElement>): void;
+  required: boolean;
+  inputRef: React.Ref<HTMLInputElement>;
 };
 
 class OtherInput extends Component<PropsType> {
   render() {
-    const { label, type, placeholder, value, ref, onChange } = this.props;
+    const { label, type, placeholder, required, inputRef } = this.props;
     return (
       <label>
         {label}
-        <input
-          type={type}
-          placeholder={placeholder}
-          value={value}
-          ref={ref}
-          onChange={onChange}
-          required
-        />
+        <input type={type} placeholder={placeholder} ref={inputRef} required={required} />
       </label>
     );
   }
