@@ -2,16 +2,16 @@ import { Component } from 'react';
 import { getMonth } from '../../utils/getMonth';
 
 export type CardPropsType = {
-  id?: number;
-  title: string;
-  size: string;
-  raiting: number;
-  descr?: string;
-  care: string[];
-  place: string;
-  blooming?: string;
-  img?: string;
-  like?: boolean;
+  id?: number | undefined;
+  title: string | undefined;
+  size: string | undefined;
+  raiting: number | undefined;
+  descr?: string | undefined;
+  care: (string | boolean | undefined)[];
+  place: string | undefined;
+  blooming?: string | undefined;
+  img?: string | undefined;
+  like?: boolean | undefined;
 };
 
 export type CarePropsType = {
@@ -60,7 +60,7 @@ C84.22,38.589,83.329,41.596,81.643,44.248z"
             <p>{place}</p>
             <p>{size}</p>
           </div>
-          <p className="card__item-descr">{care.join(', ')}</p>
+          <p className="card__item-descr">{care?.join(', ')}</p>
           {blooming && (
             <div className="card__item-about">
               <p>Start blooming period: </p>
