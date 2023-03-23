@@ -1,5 +1,5 @@
 import { Component } from 'react';
-// import './switcher.css';
+import './switcher.css';
 
 type PropsType = {
   value1: string;

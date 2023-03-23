@@ -11,7 +11,7 @@ class Checkbox extends Component<PropsType> {
     const { label, inputRef } = this.props;
     return (
       <>
-        <label>
+        <label className="form__checkbox-wrapper">
           {label}
           <input type="checkbox" className="form__checkbox" ref={inputRef} />
         </label>

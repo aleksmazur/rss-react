@@ -14,12 +14,12 @@ const routes = [
     component: <Main />,
   },
   {
-    path: 'form',
+    path: '/form',
     title: 'Form',
     component: <Form />,
   },
   {
-    path: 'about',
+    path: '/about',
     title: 'About',
     component: <About />,
   },

@@ -12,7 +12,7 @@
 }
 
 .alert__error {
-    border: 1px solid rgb(166, 20, 20);
+    opacity: 0;
 }
 
 .alert p {

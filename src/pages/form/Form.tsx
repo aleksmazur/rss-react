@@ -31,7 +31,7 @@ class Form extends React.Component<object, FormState> {
     return (
       <>
         <FormItem addCard={(card: CardPropsType) => this.addCard(card)} />
-        {success ? <Alert success={success} /> : null}
+        <Alert success={success} />
         <div className="card__list">
           {this.state.cards.map((item: CardPropsType, index: number) => {
             return <CardItem {...item} key={index} />;
