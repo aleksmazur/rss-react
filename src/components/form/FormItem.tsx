@@ -10,7 +10,32 @@ type TypeProps = {
   addCard: (card: CardPropsType) => void;
 };
 
-class FormItem extends React.Component<TypeProps, object> {
+type TypeState = {
+  title: boolean;
+  descr: boolean;
+  size: boolean;
+  place: boolean;
+  blooming: boolean;
+  raiting: boolean;
+  image: boolean;
+  showErrors: boolean;
+};
+
+class FormItem extends React.Component<TypeProps, TypeState> {
+  constructor(props: TypeProps) {
+    super(props);
+    this.state = {
+      title: false,
+      descr: true,
+      size: true,
+      place: true,
+      blooming: false,
+      raiting: true,
+      image: false,
+      showErrors: false,
+    };
+  }
+
   titleRef = React.createRef<HTMLInputElement>();
   descrRef = React.createRef<HTMLInputElement>();
   bloomingRef = React.createRef<HTMLInputElement>();
@@ -36,6 +61,56 @@ class FormItem extends React.Component<TypeProps, object> {
     { label: 'WaterDaily', ref: this.careWaterDailyRef },
     { label: 'WaterWeekly', ref: this.careWaterWeeklyRef },
   ];
+
+  validateTitle(): boolean {
+    if (this.titleRef.current?.value && this.titleRef.current?.value.length > 3) {
+      this.setState(() => ({
+        title: true,
+      }));
+      return true;
+    } else {
+      this.setState(() => ({
+        title: false,
+      }));
+      return false;
+    }
+  }
+
+  validateBlooming(): boolean {
+    console.log(this.bloomingRef.current?.value);
+    if (this.bloomingRef.current?.value) {
+      this.setState(() => ({
+        blooming: true,
+      }));
+      return true;
+    } else {
+      this.setState(() => ({
+        blooming: false,
+      }));
+      return false;
+    }
+  }
+
+  validateImage(): boolean {
+    if (this.fileRef.current?.files && this.fileRef.current?.files?.length > 0) {
+      this.setState(() => ({
+        image: true,
+      }));
+      return true;
+    } else {
+      this.setState(() => ({
+        image: false,
+      }));
+      return false;
+    }
+  }
+
+  allValidate(): boolean {
+    const image = this.validateImage();
+    const blooming = this.validateBlooming();
+    const title = this.validateTitle();
+    return image && blooming && title === true ? true : false;
+  }
 
   handleSubmit: React.ChangeEventHandler<HTMLFormElement> = (e) => {
     const { addCard } = this.props;
@@ -67,21 +142,42 @@ class FormItem extends React.Component<TypeProps, object> {
       img: file ? URL.createObjectURL(file) : undefined,
     };
     console.log(card);
-    addCard(card);
-    e.target.reset();
+    if (this.allValidate()) {
+      addCard(card);
+      e.target.reset();
+      this.setState(() => ({
+        title: false,
+        descr: true,
+        size: false,
+        place: false,
+        blooming: false,
+        raiting: false,
+        image: false,
+        showErrors: false,
+      }));
+    } else {
+      this.setState(() => ({
+        showErrors: true,
+      }));
+    }
+    console.log(this.state);
   };
 
   render() {
+    const { title, descr, size, blooming, image, showErrors } = this.state;
     return (
       <div>
         <h2 className="section__title">Add new Plant</h2>
-        <form className="addPlant__form" onSubmit={this.handleSubmit}>
+        <form noValidate className="addPlant__form" onSubmit={this.handleSubmit}>
           <OtherInput
             label={'Title:'}
             type={'text'}
             placeholder={'Add title'}
             required={true}
             inputRef={this.titleRef}
+            isValid={title}
+            showErrors={showErrors}
+            error={'Min 3'}
           />
           <OtherInput
             label={'Description:'}
@@ -89,13 +185,19 @@ class FormItem extends React.Component<TypeProps, object> {
             placeholder={'Add description'}
             required={false}
             inputRef={this.descrRef}
+            isValid={descr}
+            showErrors={showErrors}
+            error={'Min 3'}
           />
           <Select label={'Size:'} options={['Mini', 'Medium', 'Maxi']} inputRef={this.sizeRef} />
-          {this.careOptions.map(
-            (el: { label: string; ref: React.Ref<HTMLInputElement> }, index: number) => {
-              return <Checkbox label={el.label} inputRef={el.ref} key={index} />;
-            }
-          )}
+          <div>
+            Care:
+            {this.careOptions.map(
+              (el: { label: string; ref: React.Ref<HTMLInputElement> }, index: number) => {
+                return <Checkbox label={el.label} inputRef={el.ref} key={index} />;
+              }
+            )}
+          </div>
           <Switcher
             value1={'Outdoor'}
             value2={'Indoor'}
@@ -110,6 +212,9 @@ class FormItem extends React.Component<TypeProps, object> {
             placeholder={''}
             required={false}
             inputRef={this.bloomingRef}
+            isValid={blooming}
+            showErrors={showErrors}
+            error={'No period'}
           />
           <Select label={'Raiting:'} options={[1, 2, 3, 4, 5]} inputRef={this.raitingRef} />
           <OtherInput
@@ -118,6 +223,9 @@ class FormItem extends React.Component<TypeProps, object> {
             placeholder={''}
             required={false}
             inputRef={this.fileRef}
+            isValid={image}
+            showErrors={showErrors}
+            error={'No image'}
           />
           <button type="submit">Add Plant</button>
         </form>
