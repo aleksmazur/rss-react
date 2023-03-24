@@ -1,28 +1,17 @@
 import { Component } from 'react';
+import { PropsTypeOtherInput } from '../../../types/types';
 import './otherInput.css';
 
-type PropsType = {
-  label: string;
-  type: string;
-  placeholder: string;
-  required: boolean;
-  inputRef: React.Ref<HTMLInputElement>;
-  isValid: boolean;
-  error: string;
-  showErrors: boolean;
-};
-
-class OtherInput extends Component<PropsType> {
+class OtherInput extends Component<PropsTypeOtherInput> {
   render() {
-    const { label, type, placeholder, required, inputRef, isValid, error, showErrors } = this.props;
+    const { label, type, inputRef, isValid, error, showErrors } = this.props;
     return (
       <label>
-        {label}
+        {label}:
         <input
           type={type}
-          placeholder={placeholder}
+          placeholder={`Add ${label}`}
           ref={inputRef}
-          required={required}
           accept={type === 'file' ? 'image/*' : ''}
         />
         {!isValid && showErrors && <div className="error__message">{error}</div>}

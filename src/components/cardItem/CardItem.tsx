@@ -1,28 +1,6 @@
 import { Component } from 'react';
+import { CardPropsType } from '../../types/types';
 import { getMonth } from '../../utils/getMonth';
-
-export type CardPropsType = {
-  id?: number | undefined;
-  title: string | undefined;
-  size: string | undefined;
-  raiting: number | undefined;
-  descr?: string | undefined;
-  care: (string | boolean | undefined)[];
-  place: string | undefined;
-  blooming?: string | undefined;
-  img?: string | undefined;
-  like?: boolean | undefined;
-};
-
-export type CarePropsType = {
-  bright: boolean;
-  sun: boolean;
-  shade: boolean;
-  sandy: boolean;
-  soil: boolean;
-  waterDaily: boolean;
-  waterWeekly: boolean;
-};
 
 class CardItem extends Component<CardPropsType> {
   render() {

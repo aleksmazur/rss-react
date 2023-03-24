@@ -1,16 +1,8 @@
 import { Component } from 'react';
+import { PropsTypeSelect } from '../../../types/types';
 import './select.css';
 
-type PropsType = {
-  label: string;
-  options: (number | undefined)[] | (string | undefined)[];
-  inputRef: React.Ref<HTMLSelectElement>;
-  isValid: boolean;
-  error: string;
-  showErrors: boolean;
-};
-
-class Select extends Component<PropsType> {
+class Select extends Component<PropsTypeSelect> {
   render() {
     const { label, options, inputRef, isValid, error, showErrors } = this.props;
     return (

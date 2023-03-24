@@ -1,19 +1,8 @@
 import { Component } from 'react';
+import { PropsTypeSwitcher } from '../../../types/types';
 import './switcher.css';
 
-type PropsType = {
-  value1: string;
-  value2: string;
-  label: string;
-  name: string;
-  inputRef1: React.Ref<HTMLInputElement>;
-  inputRef2: React.Ref<HTMLInputElement>;
-  isValid: boolean;
-  error: string;
-  showErrors: boolean;
-};
-
-class Switcher extends Component<PropsType> {
+class Switcher extends Component<PropsTypeSwitcher> {
   render() {
     const { value1, value2, label, name, inputRef1, inputRef2, isValid, error, showErrors } =
       this.props;

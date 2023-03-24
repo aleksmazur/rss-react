@@ -1,29 +1,13 @@
 import React from 'react';
-import { CardPropsType } from '../cardItem/CardItem';
+import { CardPropsType, TypePropsForm, TypeStateForm } from '../../types/types';
 import Checkbox from '../formBits/checkbox/Checkbox';
 import OtherInput from '../formBits/otherInputs/OtherInput';
 import Select from '../formBits/select/Select';
 import Switcher from '../formBits/switcher/Switcher';
-import './form.css';
+import './formItem.css';
 
-type TypeProps = {
-  addCard: (card: CardPropsType) => void;
-};
-
-type TypeState = {
-  title: boolean;
-  descr: boolean;
-  size: boolean;
-  place: boolean;
-  blooming: boolean;
-  care: boolean;
-  raiting: boolean;
-  image: boolean;
-  showErrors: boolean;
-};
-
-class FormItem extends React.Component<TypeProps, TypeState> {
-  constructor(props: TypeProps) {
+class FormItem extends React.Component<TypePropsForm, TypeStateForm> {
+  constructor(props: TypePropsForm) {
     super(props);
     this.state = {
       title: false,
@@ -65,21 +49,19 @@ class FormItem extends React.Component<TypeProps, TypeState> {
   ];
 
   allValidate(): boolean {
-    const correctTitle = !!(
-      this.titleRef.current?.value && this.titleRef.current?.value.length > 3
-    );
-    const correctBlooming = !!this.bloomingRef.current?.value;
-    const correctImage = !!(
+    const corTitle = !!(this.titleRef.current?.value && this.titleRef.current?.value.length > 3);
+    const corBlooming = !!this.bloomingRef.current?.value;
+    const corImage = !!(
       this.fileRef.current?.files?.[0] && this.fileRef.current?.files[0].type.includes('image')
     );
-    const correctSize = !!this.sizeRef.current?.value;
-    const correctRaiting = !!(
+    const corSize = !!this.sizeRef.current?.value;
+    const corRaiting = !!(
       this.raitingRef.current?.value && Number(this.raitingRef.current?.value) > 0
     );
-    const correctPlace = !!(
+    const corPlace = !!(
       this.placeOutdoorRef.current?.checked || this.placeIndoorRef.current?.checked
     );
-    const correctCare = !!(
+    const corCare = !!(
       this.careBrightRef.current?.checked ||
       this.careSunRef.current?.checked ||
       this.careShadeRef.current?.checked ||
@@ -89,24 +71,16 @@ class FormItem extends React.Component<TypeProps, TypeState> {
       this.careWaterWeeklyRef.current?.checked
     );
     this.setState(() => ({
-      title: correctTitle,
+      title: corTitle,
       descr: true,
-      size: correctSize,
-      place: correctPlace,
-      care: correctCare,
-      blooming: correctBlooming,
-      raiting: correctRaiting,
-      image: correctImage,
+      size: corSize,
+      place: corPlace,
+      care: corCare,
+      blooming: corBlooming,
+      raiting: corRaiting,
+      image: corImage,
     }));
-    return (
-      correctTitle &&
-      correctImage &&
-      correctBlooming &&
-      correctSize &&
-      correctCare &&
-      correctRaiting &&
-      correctPlace
-    );
+    return corTitle && corImage && corBlooming && corSize && corCare && corRaiting && corPlace;
   }
 
   createCard(): CardPropsType {
@@ -160,24 +134,20 @@ class FormItem extends React.Component<TypeProps, TypeState> {
         <h2 className="section__title">Add new Plant</h2>
         <form noValidate className="addPlant__form" onSubmit={this.handleSubmit}>
           <OtherInput
-            label={'Title:'}
+            label={'Title'}
             type={'text'}
-            placeholder={'Add title'}
-            required={true}
             inputRef={this.titleRef}
             isValid={title}
             showErrors={showErrors}
             error={'It should contain minimum 3 characters'}
           />
           <OtherInput
-            label={'Description:'}
+            label={'Description'}
             type={'text'}
-            placeholder={'Add description'}
-            required={false}
             inputRef={this.descrRef}
             isValid={descr}
             showErrors={showErrors}
-            error={'Min 3'}
+            error={''}
           />
           <Select
             label={'Size:'}
@@ -194,11 +164,13 @@ class FormItem extends React.Component<TypeProps, TypeState> {
                 <div className="error__message">Please, select plant care</div>
               )}
             </div>
-            {this.careOptions.map(
-              (el: { label: string; ref: React.Ref<HTMLInputElement> }, index: number) => {
-                return <Checkbox label={el.label} inputRef={el.ref} key={index} />;
-              }
-            )}
+            <div className="care__form-checkboxes">
+              {this.careOptions.map(
+                (el: { label: string; ref: React.Ref<HTMLInputElement> }, index: number) => {
+                  return <Checkbox label={el.label} inputRef={el.ref} key={index} />;
+                }
+              )}
+            </div>
           </div>
           <Switcher
             value1={'Outdoor'}
@@ -212,10 +184,8 @@ class FormItem extends React.Component<TypeProps, TypeState> {
             error={'Please, select place for plant'}
           />
           <OtherInput
-            label={'Blooming period:'}
+            label={'Blooming period'}
             type={'month'}
-            placeholder={''}
-            required={false}
             inputRef={this.bloomingRef}
             isValid={blooming}
             showErrors={showErrors}
@@ -230,10 +200,8 @@ class FormItem extends React.Component<TypeProps, TypeState> {
             error={'Please, add plantt raiting'}
           />
           <OtherInput
-            label={'Image:'}
+            label={'Image'}
             type={'file'}
-            placeholder={''}
-            required={false}
             inputRef={this.fileRef}
             isValid={image}
             showErrors={showErrors}

@@ -1,12 +1,8 @@
 import { Component } from 'react';
+import { PropsTypeCheckbox } from '../../../types/types';
 import './checkbox.css';
 
-type PropsType = {
-  label: string;
-  inputRef: React.Ref<HTMLInputElement>;
-};
-
-class Checkbox extends Component<PropsType> {
+class Checkbox extends Component<PropsTypeCheckbox> {
   render() {
     const { label, inputRef } = this.props;
     return (
