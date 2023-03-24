@@ -18,7 +18,13 @@ class OtherInput extends Component<PropsType> {
     return (
       <label>
         {label}
-        <input type={type} placeholder={placeholder} ref={inputRef} required={required} />
+        <input
+          type={type}
+          placeholder={placeholder}
+          ref={inputRef}
+          required={required}
+          accept={type === 'file' ? 'image/*' : ''}
+        />
         {!isValid && showErrors && <div className="error__message">{error}</div>}
       </label>
     );

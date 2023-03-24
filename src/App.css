@@ -79,7 +79,11 @@
 }
 
 .error__message {
+    display: flex;
+    align-items: center;
     color: red;
+    font-size: 0.8rem;
+    text-align: left;
 }
 
 @keyframes logo-spin {

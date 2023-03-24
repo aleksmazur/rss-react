@@ -8,11 +8,15 @@ type PropsType = {
   name: string;
   inputRef1: React.Ref<HTMLInputElement>;
   inputRef2: React.Ref<HTMLInputElement>;
+  isValid: boolean;
+  error: string;
+  showErrors: boolean;
 };
 
 class Switcher extends Component<PropsType> {
   render() {
-    const { value1, value2, label, name, inputRef1, inputRef2 } = this.props;
+    const { value1, value2, label, name, inputRef1, inputRef2, isValid, error, showErrors } =
+      this.props;
     return (
       <div className="switch">
         <p>{label}</p>
@@ -26,6 +30,7 @@ class Switcher extends Component<PropsType> {
             <input type="radio" name={name} value={value2} ref={inputRef2} />
           </label>
         </div>
+        {!isValid && showErrors && <div className="error__message">{error}</div>}
       </div>
     );
   }

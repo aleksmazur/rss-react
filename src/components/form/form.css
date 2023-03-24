@@ -1,7 +1,7 @@
 .addPlant__form {
     display: flex;
     flex-direction: column;
-    max-width: 400px;
+    max-width: 500px;
     align-items: flex-start;
     background-color: rgba(0, 0, 0, .7);
     padding: 10px;
@@ -11,7 +11,7 @@
     margin-bottom: 10px;
 }
 
-.addPlant__form label {
+.addPlant__form label, .care__form-section {
     display: flex;
     gap: 10px;
 }

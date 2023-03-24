@@ -3,13 +3,16 @@ import './select.css';
 
 type PropsType = {
   label: string;
-  options: number[] | string[];
+  options: (number | undefined)[] | (string | undefined)[];
   inputRef: React.Ref<HTMLSelectElement>;
+  isValid: boolean;
+  error: string;
+  showErrors: boolean;
 };
 
 class Select extends Component<PropsType> {
   render() {
-    const { label, options, inputRef } = this.props;
+    const { label, options, inputRef, isValid, error, showErrors } = this.props;
     return (
       <label>
         {label}
@@ -22,6 +25,7 @@ class Select extends Component<PropsType> {
             );
           })}
         </select>
+        {!isValid && showErrors && <div className="error__message">{error}</div>}
       </label>
     );
   }

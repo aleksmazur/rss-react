@@ -16,6 +16,7 @@ type TypeState = {
   size: boolean;
   place: boolean;
   blooming: boolean;
+  care: boolean;
   raiting: boolean;
   image: boolean;
   showErrors: boolean;
@@ -27,10 +28,11 @@ class FormItem extends React.Component<TypeProps, TypeState> {
     this.state = {
       title: false,
       descr: true,
-      size: true,
-      place: true,
+      size: false,
+      place: false,
       blooming: false,
-      raiting: true,
+      care: false,
+      raiting: false,
       image: false,
       showErrors: false,
     };
@@ -62,59 +64,52 @@ class FormItem extends React.Component<TypeProps, TypeState> {
     { label: 'WaterWeekly', ref: this.careWaterWeeklyRef },
   ];
 
-  validateTitle(): boolean {
-    if (this.titleRef.current?.value && this.titleRef.current?.value.length > 3) {
-      this.setState(() => ({
-        title: true,
-      }));
-      return true;
-    } else {
-      this.setState(() => ({
-        title: false,
-      }));
-      return false;
-    }
-  }
-
-  validateBlooming(): boolean {
-    console.log(this.bloomingRef.current?.value);
-    if (this.bloomingRef.current?.value) {
-      this.setState(() => ({
-        blooming: true,
-      }));
-      return true;
-    } else {
-      this.setState(() => ({
-        blooming: false,
-      }));
-      return false;
-    }
-  }
-
-  validateImage(): boolean {
-    if (this.fileRef.current?.files && this.fileRef.current?.files?.length > 0) {
-      this.setState(() => ({
-        image: true,
-      }));
-      return true;
-    } else {
-      this.setState(() => ({
-        image: false,
-      }));
-      return false;
-    }
-  }
-
   allValidate(): boolean {
-    const image = this.validateImage();
-    const blooming = this.validateBlooming();
-    const title = this.validateTitle();
-    return image && blooming && title === true ? true : false;
+    const correctTitle = !!(
+      this.titleRef.current?.value && this.titleRef.current?.value.length > 3
+    );
+    const correctBlooming = !!this.bloomingRef.current?.value;
+    const correctImage = !!(
+      this.fileRef.current?.files?.[0] && this.fileRef.current?.files[0].type.includes('image')
+    );
+    const correctSize = !!this.sizeRef.current?.value;
+    const correctRaiting = !!(
+      this.raitingRef.current?.value && Number(this.raitingRef.current?.value) > 0
+    );
+    const correctPlace = !!(
+      this.placeOutdoorRef.current?.checked || this.placeIndoorRef.current?.checked
+    );
+    const correctCare = !!(
+      this.careBrightRef.current?.checked ||
+      this.careSunRef.current?.checked ||
+      this.careShadeRef.current?.checked ||
+      this.careSandyRef.current?.checked ||
+      this.careSoilRef.current?.checked ||
+      this.careWaterDailyRef.current?.checked ||
+      this.careWaterWeeklyRef.current?.checked
+    );
+    this.setState(() => ({
+      title: correctTitle,
+      descr: true,
+      size: correctSize,
+      place: correctPlace,
+      care: correctCare,
+      blooming: correctBlooming,
+      raiting: correctRaiting,
+      image: correctImage,
+    }));
+    return (
+      correctTitle &&
+      correctImage &&
+      correctBlooming &&
+      correctSize &&
+      correctCare &&
+      correctRaiting &&
+      correctPlace
+    );
   }
 
-  handleSubmit: React.ChangeEventHandler<HTMLFormElement> = (e) => {
-    const { addCard } = this.props;
-    e.preventDefault();
+  createCard(): CardPropsType {
     const file = this.fileRef.current?.files?.[0];
     const card = {
       title: this.titleRef.current?.value,
@@ -141,30 +136,25 @@ class FormItem extends React.Component<TypeProps, TypeState> {
       raiting: Number(this.raitingRef.current?.value),
       img: file ? URL.createObjectURL(file) : undefined,
     };
-    console.log(card);
+    return card;
+  }
+
+  handleSubmit: React.ChangeEventHandler<HTMLFormElement> = (e) => {
+    const { addCard } = this.props;
+    e.preventDefault();
     if (this.allValidate()) {
+      const card: CardPropsType = this.createCard();
       addCard(card);
       e.target.reset();
-      this.setState(() => ({
-        title: false,
-        descr: true,
-        size: false,
-        place: false,
-        blooming: false,
-        raiting: false,
-        image: false,
-        showErrors: false,
-      }));
     } else {
       this.setState(() => ({
         showErrors: true,
       }));
     }
-    console.log(this.state);
   };
 
   render() {
-    const { title, descr, size, blooming, image, showErrors } = this.state;
+    const { title, descr, size, raiting, blooming, care, place, image, showErrors } = this.state;
     return (
       <div>
         <h2 className="section__title">Add new Plant</h2>
@@ -177,7 +167,7 @@ class FormItem extends React.Component<TypeProps, TypeState> {
             inputRef={this.titleRef}
             isValid={title}
             showErrors={showErrors}
-            error={'Min 3'}
+            error={'It should contain minimum 3 characters'}
           />
           <OtherInput
             label={'Description:'}
@@ -189,9 +179,21 @@ class FormItem extends React.Component<TypeProps, TypeState> {
             showErrors={showErrors}
             error={'Min 3'}
           />
-          <Select label={'Size:'} options={['Mini', 'Medium', 'Maxi']} inputRef={this.sizeRef} />
+          <Select
+            label={'Size:'}
+            options={[undefined, 'Mini', 'Medium', 'Maxi']}
+            inputRef={this.sizeRef}
+            isValid={size}
+            showErrors={showErrors}
+            error={'Please, select plant size'}
+          />
           <div>
-            Care:
+            <div className="care__form-section">
+              Care:
+              {!care && showErrors && (
+                <div className="error__message">Please, select plant care</div>
+              )}
+            </div>
             {this.careOptions.map(
               (el: { label: string; ref: React.Ref<HTMLInputElement> }, index: number) => {
                 return <Checkbox label={el.label} inputRef={el.ref} key={index} />;
@@ -205,6 +207,9 @@ class FormItem extends React.Component<TypeProps, TypeState> {
             name={'place'}
             inputRef1={this.placeOutdoorRef}
             inputRef2={this.placeIndoorRef}
+            isValid={place}
+            showErrors={showErrors}
+            error={'Please, select place for plant'}
           />
           <OtherInput
             label={'Blooming period:'}
@@ -214,9 +219,16 @@ class FormItem extends React.Component<TypeProps, TypeState> {
             inputRef={this.bloomingRef}
             isValid={blooming}
             showErrors={showErrors}
-            error={'No period'}
+            error={'Please, select plant blooming period'}
           />
-          <Select label={'Raiting:'} options={[1, 2, 3, 4, 5]} inputRef={this.raitingRef} />
+          <Select
+            label={'Raiting:'}
+            options={[undefined, 1, 2, 3, 4, 5]}
+            inputRef={this.raitingRef}
+            isValid={raiting}
+            showErrors={showErrors}
+            error={'Please, add plantt raiting'}
+          />
           <OtherInput
             label={'Image:'}
             type={'file'}
@@ -225,7 +237,7 @@ class FormItem extends React.Component<TypeProps, TypeState> {
             inputRef={this.fileRef}
             isValid={image}
             showErrors={showErrors}
-            error={'No image'}
+            error={'No image available'}
           />
           <button type="submit">Add Plant</button>
         </form>
