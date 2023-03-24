@@ -9,7 +9,7 @@ it('display the "See more" btn', () => {
     raiting: 2,
     description: 'string',
     care: ['string'],
-    indoorOutdoor: 'string',
+    place: 'string',
     blooming: 'string',
     img: 'string',
     like: true,

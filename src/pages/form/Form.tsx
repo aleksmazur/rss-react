@@ -1,7 +1,8 @@
 import React from 'react';
 import Alert from '../../components/alert/Alert';
-import CardItem, { CardPropsType } from '../../components/cardItem/CardItem';
+import CardItem from '../../components/cardItem/CardItem';
 import FormItem from '../../components/form/FormItem';
+import { CardPropsType } from '../../types/types';
 import './form.css';
 
 type FormState = {
