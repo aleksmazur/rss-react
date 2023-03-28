@@ -79,6 +79,7 @@ const FormItem = ({ addCard }: TypePropsForm) => {
 
   const createCard = (): CardPropsType => {
     const file = fileRef.current?.files?.[0];
+    console.log(bloomingRef.current?.value);
     const card = {
       title: titleRef.current?.value,
       descr: descrRef.current?.value,
