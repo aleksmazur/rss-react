@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CardPropsType, TypePropsForm, TypeStateForm } from '../../types/types';
 import Checkbox from '../formBits/checkbox/Checkbox';
 import OtherInput from '../formBits/otherInputs/OtherInput';
@@ -6,71 +6,64 @@ import Select from '../formBits/select/Select';
 import Switcher from '../formBits/switcher/Switcher';
 import './formItem.css';
 
-class FormItem extends React.Component<TypePropsForm, TypeStateForm> {
-  constructor(props: TypePropsForm) {
-    super(props);
-    this.state = {
-      title: false,
-      descr: true,
-      size: false,
-      place: false,
-      blooming: false,
-      care: false,
-      raiting: false,
-      image: false,
-      showErrors: false,
-    };
-  }
+const FormItem = ({ addCard }: TypePropsForm) => {
+  const titleRef = React.createRef<HTMLInputElement>();
+  const descrRef = React.createRef<HTMLInputElement>();
+  const bloomingRef = React.createRef<HTMLInputElement>();
+  const sizeRef = React.createRef<HTMLSelectElement>();
+  const careBrightRef = React.createRef<HTMLInputElement>();
+  const careSunRef = React.createRef<HTMLInputElement>();
+  const careShadeRef = React.createRef<HTMLInputElement>();
+  const careSandyRef = React.createRef<HTMLInputElement>();
+  const careSoilRef = React.createRef<HTMLInputElement>();
+  const careWaterDailyRef = React.createRef<HTMLInputElement>();
+  const careWaterWeeklyRef = React.createRef<HTMLInputElement>();
+  const raitingRef = React.createRef<HTMLSelectElement>();
+  const placeIndoorRef = React.createRef<HTMLInputElement>();
+  const placeOutdoorRef = React.createRef<HTMLInputElement>();
+  const fileRef = React.createRef<HTMLInputElement>();
 
-  titleRef = React.createRef<HTMLInputElement>();
-  descrRef = React.createRef<HTMLInputElement>();
-  bloomingRef = React.createRef<HTMLInputElement>();
-  sizeRef = React.createRef<HTMLSelectElement>();
-  careBrightRef = React.createRef<HTMLInputElement>();
-  careSunRef = React.createRef<HTMLInputElement>();
-  careShadeRef = React.createRef<HTMLInputElement>();
-  careSandyRef = React.createRef<HTMLInputElement>();
-  careSoilRef = React.createRef<HTMLInputElement>();
-  careWaterDailyRef = React.createRef<HTMLInputElement>();
-  careWaterWeeklyRef = React.createRef<HTMLInputElement>();
-  raitingRef = React.createRef<HTMLSelectElement>();
-  placeIndoorRef = React.createRef<HTMLInputElement>();
-  placeOutdoorRef = React.createRef<HTMLInputElement>();
-  fileRef = React.createRef<HTMLInputElement>();
+  const [cardData, setCardData] = useState<TypeStateForm>({
+    title: false,
+    descr: true,
+    size: false,
+    place: false,
+    blooming: false,
+    care: false,
+    raiting: false,
+    image: false,
+    showErrors: false,
+  });
 
-  careOptions = [
-    { label: 'Bright', ref: this.careBrightRef },
-    { label: 'Sun', ref: this.careSunRef },
-    { label: 'Shade', ref: this.careShadeRef },
-    { label: 'Sandy', ref: this.careSandyRef },
-    { label: 'Soil', ref: this.careSoilRef },
-    { label: 'WaterDaily', ref: this.careWaterDailyRef },
-    { label: 'WaterWeekly', ref: this.careWaterWeeklyRef },
+  const careOptions = [
+    { label: 'Bright', ref: careBrightRef },
+    { label: 'Sun', ref: careSunRef },
+    { label: 'Shade', ref: careShadeRef },
+    { label: 'Sandy', ref: careSandyRef },
+    { label: 'Soil', ref: careSoilRef },
+    { label: 'WaterDaily', ref: careWaterDailyRef },
+    { label: 'WaterWeekly', ref: careWaterWeeklyRef },
   ];
 
-  allValidate(): boolean {
-    const corTitle = !!(this.titleRef.current?.value && this.titleRef.current?.value.length > 3);
-    const corBlooming = !!this.bloomingRef.current?.value;
+  const allValidate = (): boolean => {
+    const corTitle = !!(titleRef.current?.value && titleRef.current?.value.length > 3);
+    const corBlooming = !!bloomingRef.current?.value;
     const corImage = !!(
-      this.fileRef.current?.files?.[0] && this.fileRef.current?.files[0].type.includes('image')
+      fileRef.current?.files?.[0] && fileRef.current?.files[0].type.includes('image')
     );
-    const corSize = !!this.sizeRef.current?.value;
-    const corRaiting = !!(
-      this.raitingRef.current?.value && Number(this.raitingRef.current?.value) > 0
-    );
-    const corPlace = !!(
-      this.placeOutdoorRef.current?.checked || this.placeIndoorRef.current?.checked
-    );
+    const corSize = !!sizeRef.current?.value;
+    const corRaiting = !!(raitingRef.current?.value && Number(raitingRef.current?.value) > 0);
+    const corPlace = !!(placeOutdoorRef.current?.checked || placeIndoorRef.current?.checked);
     const corCare = !!(
-      this.careBrightRef.current?.checked ||
-      this.careSunRef.current?.checked ||
-      this.careShadeRef.current?.checked ||
-      this.careSandyRef.current?.checked ||
-      this.careSoilRef.current?.checked ||
-      this.careWaterDailyRef.current?.checked ||
-      this.careWaterWeeklyRef.current?.checked
+      careBrightRef.current?.checked ||
+      careSunRef.current?.checked ||
+      careShadeRef.current?.checked ||
+      careSandyRef.current?.checked ||
+      careSoilRef.current?.checked ||
+      careWaterDailyRef.current?.checked ||
+      careWaterWeeklyRef.current?.checked
     );
-    this.setState(() => ({
+    setCardData({
       title: corTitle,
       descr: true,
       size: corSize,
@@ -79,139 +72,137 @@ class FormItem extends React.Component<TypePropsForm, TypeStateForm> {
       blooming: corBlooming,
       raiting: corRaiting,
       image: corImage,
-    }));
+      showErrors: false,
+    });
     return corTitle && corImage && corBlooming && corSize && corCare && corRaiting && corPlace;
-  }
+  };
 
-  createCard(): CardPropsType {
-    const file = this.fileRef.current?.files?.[0];
+  const createCard = (): CardPropsType => {
+    const file = fileRef.current?.files?.[0];
     const card = {
-      title: this.titleRef.current?.value,
-      descr: this.descrRef.current?.value,
-      size: this.sizeRef.current?.value,
+      title: titleRef.current?.value,
+      descr: descrRef.current?.value,
+      size: sizeRef.current?.value,
       care: Object.entries({
-        Bright: this.careBrightRef.current?.checked,
-        Sun: this.careSunRef.current?.checked,
-        Shade: this.careShadeRef.current?.checked,
-        Sandy: this.careSandyRef.current?.checked,
-        Soil: this.careSoilRef.current?.checked,
-        WaterDaily: this.careWaterDailyRef.current?.checked,
-        WaterWeekly: this.careWaterWeeklyRef.current?.checked,
+        Bright: careBrightRef.current?.checked,
+        Sun: careSunRef.current?.checked,
+        Shade: careShadeRef.current?.checked,
+        Sandy: careSandyRef.current?.checked,
+        Soil: careSoilRef.current?.checked,
+        WaterDaily: careWaterDailyRef.current?.checked,
+        WaterWeekly: careWaterWeeklyRef.current?.checked,
       })
         .filter((el) => el[1] === true)
         .flat()
         .filter((el) => typeof el !== 'boolean'),
-      place: this.placeOutdoorRef.current?.checked
-        ? this.placeOutdoorRef.current?.value
-        : this.placeIndoorRef.current?.checked
-        ? this.placeIndoorRef.current?.value
+      place: placeOutdoorRef.current?.checked
+        ? placeOutdoorRef.current?.value
+        : placeIndoorRef.current?.checked
+        ? placeIndoorRef.current?.value
         : undefined,
-      blooming: this.bloomingRef.current?.value,
-      raiting: Number(this.raitingRef.current?.value),
+      blooming: bloomingRef.current?.value,
+      raiting: Number(raitingRef.current?.value),
       img: file ? URL.createObjectURL(file) : undefined,
     };
     return card;
-  }
+  };
 
-  handleSubmit: React.ChangeEventHandler<HTMLFormElement> = (e) => {
-    const { addCard } = this.props;
+  const handleSubmit: React.ChangeEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    if (this.allValidate()) {
-      const card: CardPropsType = this.createCard();
+    if (allValidate()) {
+      const card: CardPropsType = createCard();
       addCard(card);
       e.target.reset();
     } else {
-      this.setState(() => ({
+      setCardData((cardData) => ({
+        ...cardData,
         showErrors: true,
       }));
     }
   };
 
-  render() {
-    const { title, descr, size, raiting, blooming, care, place, image, showErrors } = this.state;
-    return (
-      <div>
-        <h2 className="section__title">Add new Plant</h2>
-        <form noValidate className="addPlant__form" onSubmit={this.handleSubmit}>
-          <OtherInput
-            label={'Title'}
-            type={'text'}
-            inputRef={this.titleRef}
-            isValid={title}
-            showErrors={showErrors}
-            error={'It should contain minimum 3 characters'}
-          />
-          <OtherInput
-            label={'Description'}
-            type={'text'}
-            inputRef={this.descrRef}
-            isValid={descr}
-            showErrors={showErrors}
-            error={''}
-          />
-          <Select
-            label={'Size:'}
-            options={[undefined, 'Mini', 'Medium', 'Maxi']}
-            inputRef={this.sizeRef}
-            isValid={size}
-            showErrors={showErrors}
-            error={'Please, select plant size'}
-          />
-          <div>
-            <div className="care__form-section">
-              Care:
-              {!care && showErrors && (
-                <div className="error__message">Please, select plant care</div>
-              )}
-            </div>
-            <div className="care__form-checkboxes">
-              {this.careOptions.map(
-                (el: { label: string; ref: React.Ref<HTMLInputElement> }, index: number) => {
-                  return <Checkbox label={el.label} inputRef={el.ref} key={index} />;
-                }
-              )}
-            </div>
+  const { title, descr, size, raiting, blooming, care, place, image, showErrors } = cardData;
+
+  return (
+    <div>
+      <h2 className="section__title">Add new Plant</h2>
+      <form noValidate className="addPlant__form" onSubmit={handleSubmit}>
+        <OtherInput
+          label={'Title'}
+          type={'text'}
+          inputRef={titleRef}
+          isValid={title}
+          showErrors={showErrors}
+          error={'It should contain minimum 3 characters'}
+        />
+        <OtherInput
+          label={'Description'}
+          type={'text'}
+          inputRef={descrRef}
+          isValid={descr}
+          showErrors={showErrors}
+          error={''}
+        />
+        <Select
+          label={'Size:'}
+          options={[undefined, 'Mini', 'Medium', 'Maxi']}
+          inputRef={sizeRef}
+          isValid={size}
+          showErrors={showErrors}
+          error={'Please, select plant size'}
+        />
+        <div>
+          <div className="care__form-section">
+            Care:
+            {!care && showErrors && <div className="error__message">Please, select plant care</div>}
           </div>
-          <Switcher
-            value1={'Outdoor'}
-            value2={'Indoor'}
-            label={'Place:'}
-            name={'place'}
-            inputRef1={this.placeOutdoorRef}
-            inputRef2={this.placeIndoorRef}
-            isValid={place}
-            showErrors={showErrors}
-            error={'Please, select place for plant'}
-          />
-          <OtherInput
-            label={'Blooming period'}
-            type={'month'}
-            inputRef={this.bloomingRef}
-            isValid={blooming}
-            showErrors={showErrors}
-            error={'Please, select plant blooming period'}
-          />
-          <Select
-            label={'Raiting:'}
-            options={[undefined, 1, 2, 3, 4, 5]}
-            inputRef={this.raitingRef}
-            isValid={raiting}
-            showErrors={showErrors}
-            error={'Please, add plantt raiting'}
-          />
-          <OtherInput
-            label={'Image'}
-            type={'file'}
-            inputRef={this.fileRef}
-            isValid={image}
-            showErrors={showErrors}
-            error={'No image available'}
-          />
-          <button type="submit">Add Plant</button>
-        </form>
-      </div>
-    );
-  }
-}
+          <div className="care__form-checkboxes">
+            {careOptions.map(
+              (el: { label: string; ref: React.Ref<HTMLInputElement> }, index: number) => {
+                return <Checkbox label={el.label} inputRef={el.ref} key={index} />;
+              }
+            )}
+          </div>
+        </div>
+        <Switcher
+          value1={'Outdoor'}
+          value2={'Indoor'}
+          label={'Place:'}
+          name={'place'}
+          inputRef1={placeOutdoorRef}
+          inputRef2={placeIndoorRef}
+          isValid={place}
+          showErrors={showErrors}
+          error={'Please, select place for plant'}
+        />
+        <OtherInput
+          label={'Blooming period'}
+          type={'month'}
+          inputRef={bloomingRef}
+          isValid={blooming}
+          showErrors={showErrors}
+          error={'Please, select plant blooming period'}
+        />
+        <Select
+          label={'Raiting:'}
+          options={[undefined, 1, 2, 3, 4, 5]}
+          inputRef={raitingRef}
+          isValid={raiting}
+          showErrors={showErrors}
+          error={'Please, add plantt raiting'}
+        />
+        <OtherInput
+          label={'Image'}
+          type={'file'}
+          inputRef={fileRef}
+          isValid={image}
+          showErrors={showErrors}
+          error={'No image available'}
+        />
+        <button type="submit">Add Plant</button>
+      </form>
+    </div>
+  );
+};
 
 export default FormItem;

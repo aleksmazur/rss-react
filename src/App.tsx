@@ -1,5 +1,4 @@
 import './App.css';
-import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Main from './pages/main/Main';
 import About from './pages/about/About';
@@ -30,20 +29,16 @@ const routes = [
   },
 ];
 
-class App extends React.Component {
-  render() {
-    return (
-      <div className="app">
-        <Routes>
-          {routes.map((route, index) => {
-            return (
-              <Route key={index} path={route.path} element={<PageWrapper content={route} />} />
-            );
-          })}
-        </Routes>
-      </div>
-    );
-  }
-}
+const App = () => {
+  return (
+    <div className="app">
+      <Routes>
+        {routes.map((route, index) => {
+          return <Route key={index} path={route.path} element={<PageWrapper {...route} />} />;
+        })}
+      </Routes>
+    </div>
+  );
+};
 
 export default App;

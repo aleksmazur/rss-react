@@ -71,3 +71,18 @@ export type PropsTypeSwitcher = {
   error: string;
   showErrors: boolean;
 };
+
+export type PropsTypeHeader = {
+  title: string;
+};
+
+export type RoutePropsType = {
+  path: string;
+  title: string;
+  component: JSX.Element;
+};
+
+// export type FormState = {
+//   cards: CardPropsType[];
+//   success: boolean;
+// };
