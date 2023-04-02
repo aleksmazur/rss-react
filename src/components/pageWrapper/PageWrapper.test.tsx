@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Main from '../../pages/main/Main';
-import PageWrapper, { RoutePropsType } from './PageWrapper';
+import { RoutePropsType } from '../../types/types';
+import PageWrapper from './PageWrapper';
 
 it('display the correct title', () => {
   const route: RoutePropsType = {
@@ -12,7 +13,7 @@ it('display the correct title', () => {
 
   render(
     <Router>
-      <PageWrapper content={route} />
+      <PageWrapper {...route} />
     </Router>
   );
   const message = screen.queryByText(route.title);

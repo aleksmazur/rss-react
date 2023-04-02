@@ -1,46 +1,32 @@
-import React from 'react';
+import { useState } from 'react';
 import Alert from '../../components/alert/Alert';
 import CardItem from '../../components/cardItem/CardItem';
 import FormItem from '../../components/form/FormItem';
 import { CardPropsType } from '../../types/types';
 import './form.css';
 
-type FormState = {
-  cards: CardPropsType[];
-  success: boolean;
-};
-
-class Form extends React.Component<object, FormState> {
-  constructor(props: object) {
-    super(props);
-    this.state = { cards: [], success: false };
-  }
-  addCard(card: CardPropsType) {
-    this.setState((prevState: FormState) => ({
-      cards: [...prevState.cards, card],
-      success: true,
-    }));
+const Form = () => {
+  const [cards, addCards] = useState<CardPropsType[]>([]);
+  const [success, setSuccess] = useState<boolean>(false);
+  const addCard = (card: CardPropsType) => {
+    addCards((prevState) => [...prevState, card]);
+    setSuccess(true);
     setTimeout(() => {
-      this.setState(() => ({
-        success: false,
-      }));
+      setSuccess(false);
     }, 2000);
-  }
+  };
 
-  render() {
-    const { success } = this.state;
-    return (
-      <>
-        <FormItem addCard={(card: CardPropsType) => this.addCard(card)} />
-        <Alert success={success} />
-        <div className="card__list">
-          {this.state.cards.map((item: CardPropsType, index: number) => {
-            return <CardItem {...item} key={index} />;
-          })}
-        </div>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <FormItem addCard={(card: CardPropsType) => addCard(card)} />
+      <Alert success={success} />
+      <div className="card__list">
+        {cards.map((item: CardPropsType, index: number) => {
+          return <CardItem {...item} key={index} />;
+        })}
+      </div>
+    </>
+  );
+};
 
 export default Form;

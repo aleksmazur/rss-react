@@ -4,7 +4,7 @@ export type CardPropsType = {
   size: string | undefined;
   raiting: number | undefined;
   descr?: string | undefined;
-  care: (string | boolean | undefined)[];
+  care: (string | boolean | undefined)[] | undefined;
   place: string | undefined;
   blooming?: string | undefined;
   img?: string | undefined;
@@ -70,4 +70,25 @@ export type PropsTypeSwitcher = {
   isValid: boolean;
   error: string;
   showErrors: boolean;
+};
+
+export type PropsTypeHeader = {
+  title: string;
+};
+
+export type RoutePropsType = {
+  path: string;
+  title: string;
+  component: JSX.Element;
+};
+
+export type FormInputs = {
+  title: string;
+  descr: string;
+  size: string;
+  place: string;
+  blooming: string;
+  care: string[];
+  raiting: number;
+  image: FileList;
 };
