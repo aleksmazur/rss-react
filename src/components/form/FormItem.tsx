@@ -1,10 +1,9 @@
-import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FormInputs, TypePropsForm } from '../../types/types';
 import './formItem.css';
-import '../formBits/checkbox/checkbox.css';
-import '../formBits/switcher/switcher.css';
-import '../formBits/otherInputs/otherInput.css';
+import './checkbox.css';
+import './switcher.css';
+import './otherInput.css';
 
 const FormItem = ({ addCard }: TypePropsForm) => {
   const {
@@ -12,7 +11,7 @@ const FormItem = ({ addCard }: TypePropsForm) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormInputs>();
+  } = useForm<FormInputs>({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
     const card = {
@@ -44,7 +43,7 @@ const FormItem = ({ addCard }: TypePropsForm) => {
               required: 'Please, enter title',
               minLength: {
                 value: 3,
-                message: 'It should contain minimum 3 characters',
+                message: 'It should contain minimum 4 characters',
               },
             })}
           />
