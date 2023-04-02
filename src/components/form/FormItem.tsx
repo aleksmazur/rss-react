@@ -1,205 +1,161 @@
-import React, { useState } from 'react';
-import { CardPropsType, TypePropsForm, TypeStateForm } from '../../types/types';
-import Checkbox from '../formBits/checkbox/Checkbox';
-import OtherInput from '../formBits/otherInputs/OtherInput';
-import Select from '../formBits/select/Select';
-import Switcher from '../formBits/switcher/Switcher';
+import React from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormInputs, TypePropsForm } from '../../types/types';
 import './formItem.css';
+import '../formBits/checkbox/checkbox.css';
+import '../formBits/switcher/switcher.css';
+import '../formBits/otherInputs/otherInput.css';
 
 const FormItem = ({ addCard }: TypePropsForm) => {
-  const titleRef = React.createRef<HTMLInputElement>();
-  const descrRef = React.createRef<HTMLInputElement>();
-  const bloomingRef = React.createRef<HTMLInputElement>();
-  const sizeRef = React.createRef<HTMLSelectElement>();
-  const careBrightRef = React.createRef<HTMLInputElement>();
-  const careSunRef = React.createRef<HTMLInputElement>();
-  const careShadeRef = React.createRef<HTMLInputElement>();
-  const careSandyRef = React.createRef<HTMLInputElement>();
-  const careSoilRef = React.createRef<HTMLInputElement>();
-  const careWaterDailyRef = React.createRef<HTMLInputElement>();
-  const careWaterWeeklyRef = React.createRef<HTMLInputElement>();
-  const raitingRef = React.createRef<HTMLSelectElement>();
-  const placeIndoorRef = React.createRef<HTMLInputElement>();
-  const placeOutdoorRef = React.createRef<HTMLInputElement>();
-  const fileRef = React.createRef<HTMLInputElement>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormInputs>();
 
-  const [cardData, setCardData] = useState<TypeStateForm>({
-    title: false,
-    descr: true,
-    size: false,
-    place: false,
-    blooming: false,
-    care: false,
-    raiting: false,
-    image: false,
-    showErrors: false,
-  });
-
-  const careOptions = [
-    { label: 'Bright', ref: careBrightRef },
-    { label: 'Sun', ref: careSunRef },
-    { label: 'Shade', ref: careShadeRef },
-    { label: 'Sandy', ref: careSandyRef },
-    { label: 'Soil', ref: careSoilRef },
-    { label: 'WaterDaily', ref: careWaterDailyRef },
-    { label: 'WaterWeekly', ref: careWaterWeeklyRef },
-  ];
-
-  const allValidate = (): boolean => {
-    const corTitle = !!(titleRef.current?.value && titleRef.current?.value.length > 3);
-    const corBlooming = !!bloomingRef.current?.value;
-    const corImage = !!(
-      fileRef.current?.files?.[0] && fileRef.current?.files[0].type.includes('image')
-    );
-    const corSize = !!sizeRef.current?.value;
-    const corRaiting = !!(raitingRef.current?.value && Number(raitingRef.current?.value) > 0);
-    const corPlace = !!(placeOutdoorRef.current?.checked || placeIndoorRef.current?.checked);
-    const corCare = !!(
-      careBrightRef.current?.checked ||
-      careSunRef.current?.checked ||
-      careShadeRef.current?.checked ||
-      careSandyRef.current?.checked ||
-      careSoilRef.current?.checked ||
-      careWaterDailyRef.current?.checked ||
-      careWaterWeeklyRef.current?.checked
-    );
-    setCardData({
-      title: corTitle,
-      descr: true,
-      size: corSize,
-      place: corPlace,
-      care: corCare,
-      blooming: corBlooming,
-      raiting: corRaiting,
-      image: corImage,
-      showErrors: false,
-    });
-    return corTitle && corImage && corBlooming && corSize && corCare && corRaiting && corPlace;
-  };
-
-  const createCard = (): CardPropsType => {
-    const file = fileRef.current?.files?.[0];
-    console.log(bloomingRef.current?.value);
+  const onSubmit: SubmitHandler<FormInputs> = (data) => {
     const card = {
-      title: titleRef.current?.value,
-      descr: descrRef.current?.value,
-      size: sizeRef.current?.value,
-      care: Object.entries({
-        Bright: careBrightRef.current?.checked,
-        Sun: careSunRef.current?.checked,
-        Shade: careShadeRef.current?.checked,
-        Sandy: careSandyRef.current?.checked,
-        Soil: careSoilRef.current?.checked,
-        WaterDaily: careWaterDailyRef.current?.checked,
-        WaterWeekly: careWaterWeeklyRef.current?.checked,
-      })
-        .filter((el) => el[1] === true)
-        .flat()
-        .filter((el) => typeof el !== 'boolean'),
-      place: placeOutdoorRef.current?.checked
-        ? placeOutdoorRef.current?.value
-        : placeIndoorRef.current?.checked
-        ? placeIndoorRef.current?.value
-        : undefined,
-      blooming: bloomingRef.current?.value,
-      raiting: Number(raitingRef.current?.value),
-      img: file ? URL.createObjectURL(file) : undefined,
+      title: data.title,
+      size: data.size,
+      raiting: data.raiting,
+      descr: data.descr,
+      care: data.care,
+      place: data.place,
+      blooming: data.blooming,
+      img: URL.createObjectURL(data.image[0]),
     };
-    return card;
+    addCard(card);
+    reset();
   };
 
-  const handleSubmit: React.ChangeEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    if (allValidate()) {
-      const card: CardPropsType = createCard();
-      addCard(card);
-      e.target.reset();
-    } else {
-      setCardData((cardData) => ({
-        ...cardData,
-        showErrors: true,
-      }));
-    }
-  };
-
-  const { title, descr, size, raiting, blooming, care, place, image, showErrors } = cardData;
+  const careOptions = ['Bright', 'Sun', 'Shade', 'Sandy', 'Soil', 'WaterDaily', 'WaterWeekly'];
 
   return (
     <div>
       <h2 className="section__title">Add new Plant</h2>
-      <form noValidate className="addPlant__form" onSubmit={handleSubmit}>
-        <OtherInput
-          label={'Title'}
-          type={'text'}
-          inputRef={titleRef}
-          isValid={title}
-          showErrors={showErrors}
-          error={'It should contain minimum 3 characters'}
-        />
-        <OtherInput
-          label={'Description'}
-          type={'text'}
-          inputRef={descrRef}
-          isValid={descr}
-          showErrors={showErrors}
-          error={''}
-        />
-        <Select
-          label={'Size:'}
-          options={[undefined, 'Mini', 'Medium', 'Maxi']}
-          inputRef={sizeRef}
-          isValid={size}
-          showErrors={showErrors}
-          error={'Please, select plant size'}
-        />
+      <form noValidate className="addPlant__form" onSubmit={handleSubmit(onSubmit)}>
+        <label>
+          Title:
+          <input
+            type="text"
+            placeholder={`Add title`}
+            {...register('title', {
+              required: 'Please, enter title',
+              minLength: {
+                value: 3,
+                message: 'It should contain minimum 3 characters',
+              },
+            })}
+          />
+          {errors?.title && <div className="error__message">{errors?.title.message}</div>}
+        </label>
+        <label>
+          Description:
+          <input type="text" placeholder={`Add description`} {...register('descr')} />
+        </label>
+        <label>
+          Size:
+          <select
+            className="select"
+            {...register('size', { required: 'Please, select plant size' })}
+          >
+            {[undefined, 'Mini', 'Medium', 'Maxi'].map((option, index) => {
+              return (
+                <option key={index} value={option}>
+                  {option}
+                </option>
+              );
+            })}
+          </select>
+          {errors?.size && <div className="error__message">{errors?.size.message}</div>}
+        </label>
         <div>
           <div className="care__form-section">
             Care:
-            {!care && showErrors && <div className="error__message">Please, select plant care</div>}
+            {errors?.care && <div className="error__message">{errors?.care.message}</div>}
           </div>
           <div className="care__form-checkboxes">
-            {careOptions.map(
-              (el: { label: string; ref: React.Ref<HTMLInputElement> }, index: number) => {
-                return <Checkbox label={el.label} inputRef={el.ref} key={index} />;
-              }
-            )}
+            {careOptions.map((el: string, index: number) => {
+              return (
+                <label className="form__checkbox-wrapper" key={index}>
+                  {el}
+                  <input
+                    type="checkbox"
+                    className="form__checkbox"
+                    value={el}
+                    {...register('care', { required: 'Please, select plant care' })}
+                  />
+                </label>
+              );
+            })}
           </div>
         </div>
-        <Switcher
-          value1={'Outdoor'}
-          value2={'Indoor'}
-          label={'Place:'}
-          name={'place'}
-          inputRef1={placeOutdoorRef}
-          inputRef2={placeIndoorRef}
-          isValid={place}
-          showErrors={showErrors}
-          error={'Please, select place for plant'}
-        />
-        <OtherInput
-          label={'Blooming period'}
-          type={'month'}
-          inputRef={bloomingRef}
-          isValid={blooming}
-          showErrors={showErrors}
-          error={'Please, select plant blooming period'}
-        />
-        <Select
-          label={'Raiting:'}
-          options={[undefined, 1, 2, 3, 4, 5]}
-          inputRef={raitingRef}
-          isValid={raiting}
-          showErrors={showErrors}
-          error={'Please, add plantt raiting'}
-        />
-        <OtherInput
-          label={'Image'}
-          type={'file'}
-          inputRef={fileRef}
-          isValid={image}
-          showErrors={showErrors}
-          error={'No image available'}
-        />
+        <div className="switch">
+          <p>Place:</p>
+          <div className="form__radio-group">
+            <label>
+              Outdoor
+              <input
+                type="radio"
+                value="Outdoor"
+                {...register('place', { required: 'Please, select place for plant' })}
+              />
+            </label>
+            <label>
+              Indoor
+              <input
+                type="radio"
+                value="Indoor"
+                {...register('place', { required: 'Please, select place for plant' })}
+              />
+            </label>
+          </div>
+          {errors?.place && <div className="error__message">{errors?.place.message}</div>}
+        </div>
+        <label>
+          Blooming period:
+          <input
+            type="month"
+            {...register('blooming', { required: 'Please, add blooming period' })}
+          />
+          {errors?.blooming && <div className="error__message">{errors?.blooming?.message}</div>}
+        </label>
+        <label>
+          Raiting:
+          <select
+            className="select"
+            {...register('raiting', { required: 'Please, add plantt raiting' })}
+          >
+            {[undefined, 1, 2, 3, 4, 5].map((option, index) => {
+              return (
+                <option key={index} value={option}>
+                  {option}
+                </option>
+              );
+            })}
+          </select>
+          {errors?.raiting && <div className="error__message">{errors?.raiting.message}</div>}
+        </label>
+        <label>
+          Image:
+          <input
+            type="file"
+            accept={'image/*'}
+            {...register('image', {
+              required: 'Please, add image',
+              validate: {
+                acceptedFormat: (files: FileList | null) =>
+                  (files &&
+                    ['image/jpg', 'image/jpeg', 'image/png', 'image/webp'].includes(
+                      files[0].type
+                    )) ||
+                  'Please, add image format file',
+              },
+            })}
+          />
+          {errors?.image && <div className="error__message">{errors?.image.message}</div>}
+        </label>
         <button type="submit">Add Plant</button>
       </form>
     </div>

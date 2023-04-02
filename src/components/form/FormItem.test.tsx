@@ -20,7 +20,7 @@ describe('Form Item', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /Add/i }));
 
-    expect(screen.getByText(/should contain minimum 3 characters/i)).toBeInTheDocument();
+    expect(screen.getByText(/It should contain minimum 3 characters/i)).toBeInTheDocument();
     expect(screen.getByText(/select plant size/i)).toBeInTheDocument();
     expect(screen.getByText(/select plant care/i)).toBeInTheDocument();
     expect(screen.getByText(/select place for plant/i)).toBeInTheDocument();

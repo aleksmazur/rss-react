@@ -4,7 +4,7 @@ export type CardPropsType = {
   size: string | undefined;
   raiting: number | undefined;
   descr?: string | undefined;
-  care: (string | boolean | undefined)[];
+  care: (string | boolean | undefined)[] | undefined;
   place: string | undefined;
   blooming?: string | undefined;
   img?: string | undefined;
@@ -82,7 +82,13 @@ export type RoutePropsType = {
   component: JSX.Element;
 };
 
-// export type FormState = {
-//   cards: CardPropsType[];
-//   success: boolean;
-// };
+export type FormInputs = {
+  title: string;
+  descr: string;
+  size: string;
+  place: string;
+  blooming: string;
+  care: string[];
+  raiting: number;
+  image: FileList;
+};
