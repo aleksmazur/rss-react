@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Alert from '../../components/alert/Alert';
-import CardItem from '../../components/cardItem/CardItem';
+import FormCardItem from '../../components/formCardItem/CardItem';
 import FormItem from '../../components/form/FormItem';
 import { CardPropsType } from '../../types/types';
 import './form.css';
@@ -22,7 +22,7 @@ const Form = () => {
       <Alert success={success} />
       <div className="card__list">
         {cards.map((item: CardPropsType, index: number) => {
-          return <CardItem {...item} key={index} />;
+          return <FormCardItem {...item} key={index} />;
         })}
       </div>
     </>
