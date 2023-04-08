@@ -5,7 +5,7 @@ const getCharacterById = async (id: number) => {
 
   const character = (await response.json()) as CharacterResult;
 
-  if (!character.id && response.ok) throw new Error('Error: you have empty data!');
+  if (!response.ok) throw new Error(character.error);
 
   return character;
 };

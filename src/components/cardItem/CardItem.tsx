@@ -11,7 +11,7 @@ const CardItem = ({ id, image, name, gender, species, location }: CharacterResul
       <h3 className="card__item-title">{`Plant '${name}'`}</h3>
       <div className="card__item-main">
         <div className="card__item-like">{species}</div>
-        <div className="card__item-like">{gender === 'Male' ? '♂' : '♀'}</div>
+        <div className="card__item-like">{gender}</div>
       </div>
 
       <div className="card__item-about">

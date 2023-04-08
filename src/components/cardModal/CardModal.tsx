@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import getCharacterById from '../../api/getCaracterById';
 import { CharacterResult } from '../../types/types';
+import Preloader from '../preloader/Preloader';
+import './cardModal.css';
 
 const CardModal = (props: { characterId: number }) => {
   const [character, setCaracter] = useState<CharacterResult>();
@@ -15,7 +17,7 @@ const CardModal = (props: { characterId: number }) => {
   }, []);
 
   return character ? (
-    <div key={character.id} className="card__item">
+    <div className="card__item">
       <img src={character.image} alt="photo" className="card__img" />
       <h3 className="card__item-title">{`Plant '${character.name}'`}</h3>
       <div className="card__item-main">
@@ -29,7 +31,7 @@ const CardModal = (props: { characterId: number }) => {
     </div>
   ) : (
     <div>
-      <strong>{error ? error : 'Loading...'}</strong>
+      <strong>{error ? error : <Preloader />}</strong>
     </div>
   );
 };

@@ -119,16 +119,19 @@ export type CharacterResult = {
   episode: string[];
   url: string;
   created: string;
+  error?: string;
 };
 
 export type Characters = {
   info: CharacterInfo;
   results: CharacterResult[];
+  error?: string;
 };
 
 export type CaractersListState = {
   items: CharacterResult[];
   error: string;
+  loading: boolean;
 };
 
 export type CaracterIdState = {

@@ -1,19 +1,9 @@
-import { useEffect, useState } from 'react';
-import getCharacters from '../../api/getCaracters';
 import { CaractersListState } from '../../types/types';
 import CardItem from '../cardItem/CardItem';
+import Preloader from '../preloader/Preloader';
 import './cardList.css';
 
-const CardList = () => {
-  const [data, setData] = useState<CaractersListState>({ items: [], error: '' });
-
-  useEffect(() => {
-    getCharacters()
-      .then((characters) => setData({ items: characters.results, error: '' }))
-      .catch((err) => setData({ items: [], error: err.message }));
-    console.log(data);
-  }, []);
-
+const CardList = (data: CaractersListState) => {
   return data.items.length ? (
     <div className="main__cards">
       <div className="card__list">
@@ -23,9 +13,7 @@ const CardList = () => {
       </div>
     </div>
   ) : (
-    <div>
-      <strong>{data.error ? data.error : 'Loading...'}</strong>
-    </div>
+    <Preloader />
   );
 };
 

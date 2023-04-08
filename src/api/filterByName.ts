@@ -1,7 +1,7 @@
 import { Characters } from '../types/types';
 
-const getCharacters = async () => {
-  const response = await fetch('https://rickandmortyapi.com/api/character');
+const filterCharacters = async (value: string) => {
+  const response = await fetch(`https://rickandmortyapi.com/api/character/?name=${value}`);
 
   const characters = (await response.json()) as Characters;
 
@@ -10,4 +10,4 @@ const getCharacters = async () => {
   return characters;
 };
 
-export default getCharacters;
+export default filterCharacters;
