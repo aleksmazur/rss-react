@@ -3,15 +3,23 @@ import CardItem from './CardItem';
 
 const PropsType = {
   id: 1,
-  title: 'Cactus',
-  size: 'mini',
-  raiting: 2,
-  description: 'string',
-  care: ['water'],
-  place: 'string',
-  blooming: 'string',
-  img: 'string',
-  like: true,
+  name: 'Cactus',
+  status: 'Alive',
+  species: 'Human',
+  type: '',
+  gender: 'Male',
+  origin: {
+    name: 'Earth (C-500A)',
+    url: 'https://rickandmortyapi.com/api/location/23',
+  },
+  location: {
+    name: 'Earth (C-500A)',
+    url: 'https://rickandmortyapi.com/api/location/23',
+  },
+  image: 'https://rickandmortyapi.com/api/character/avatar/183.jpeg',
+  episode: ['https://rickandmortyapi.com/api/episode/8'],
+  url: 'https://rickandmortyapi.com/api/character/183',
+  created: '2017-12-29T18:51:29.693Z',
 };
 
 describe('Card Items', () => {
@@ -23,13 +31,7 @@ describe('Card Items', () => {
 
   it('display all data', () => {
     render(<CardItem {...PropsType} />);
-    expect(screen.getByText(PropsType.title)).toBeInTheDocument();
-    expect(screen.getByText(PropsType.care[0])).toBeInTheDocument();
+    expect(screen.getByText(PropsType.name)).toBeInTheDocument();
     expect(screen.getByRole('img')).toBeInTheDocument();
-  });
-
-  it('display month', () => {
-    render(<CardItem {...PropsType} />);
-    expect(screen.getByText(PropsType.blooming)).toBeInTheDocument();
   });
 });
