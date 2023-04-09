@@ -22,8 +22,8 @@ const CardModal = (props: {
     <div className="modal__overlay" onClick={() => props.setOpen(false)}>
       {character ? (
         <div className="card__modal" onClick={(e) => e.stopPropagation()}>
+          <h2 className="card__item-title">About {character.name}</h2>
           <img src={character.image} alt="photo" className="card__img" />
-          <h3 className="card__item-title">{character.name}</h3>
           <div className="card__item-main">
             <div className="card__item-like">{character.species}</div>
             <div className="card__item-like">{character.gender}</div>
