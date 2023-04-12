@@ -19,7 +19,7 @@ const CardModal = (props: {
   }, []);
 
   return (
-    <div className="modal__overlay" onClick={() => props.setOpen(false)}>
+    <div className="modal__overlay" data-testid="overlay" onClick={() => props.setOpen(false)}>
       {character ? (
         <div className="card__modal" onClick={(e) => e.stopPropagation()}>
           <h2 className="card__item-title">About {character.name}</h2>
@@ -31,7 +31,7 @@ const CardModal = (props: {
           <p>{character.location.name}</p>
           <p>{character.species}</p>
           <p>{new Date(character.created).toDateString()}</p>
-          <span className="close__modal" onClick={() => props.setOpen(false)}></span>
+          <button className="close__modal" onClick={() => props.setOpen(false)}></button>
         </div>
       ) : (
         <div>
