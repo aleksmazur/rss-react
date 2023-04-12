@@ -16,6 +16,7 @@ export default defineConfig({
       provider: 'c8',
       reporter: ['text'],
       all: true,
+      exclude: ['src/types/types.ts', 'src/utils/*', 'src/index.tsx', 'src/vite-env.d.ts'],
     },
   },
 });

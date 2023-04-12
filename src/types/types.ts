@@ -92,3 +92,49 @@ export type FormInputs = {
   raiting: number;
   image: FileList;
 };
+
+type CharacterInfo = {
+  count: number;
+  pages: number;
+  next: string;
+  prev: null;
+};
+
+export type CharacterResult = {
+  id: number;
+  name: string;
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+  origin: {
+    name: string;
+    url: string;
+  };
+  location: {
+    name: string;
+    url: string;
+  };
+  image: string;
+  episode: string[];
+  url: string;
+  created: string;
+  error?: string;
+};
+
+export type Characters = {
+  info: CharacterInfo;
+  results: CharacterResult[];
+  error?: string;
+};
+
+export type CaractersListState = {
+  items: CharacterResult[];
+  error: string;
+  loading: boolean;
+};
+
+export type CaracterIdState = {
+  char: CharacterResult;
+  error: string;
+};

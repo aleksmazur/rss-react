@@ -1,37 +1,42 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { SetStateAction } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import filterCharacters from '../../api/filterByName';
+import { CaractersListState } from '../../types/types';
 
-const SearchPanel = () => {
-  const [inputText, setInputText] = useState<string>(localStorage.getItem('search') || '');
+type IProps = {
+  setData: React.Dispatch<SetStateAction<CaractersListState>>;
+  setInputText: React.Dispatch<SetStateAction<string>>;
+  inputText: string;
+};
 
-  const searchRef = useRef<string>();
+const SearchPanel = ({ setData, inputText, setInputText }: IProps) => {
+  const { register, handleSubmit } = useForm<{ value: string }>({
+    mode: 'onSubmit',
+  });
 
-  useEffect(() => {
-    searchRef.current = inputText;
-  }, [inputText]);
-
-  useEffect(() => {
-    return () => {
-      localStorage.setItem('search', searchRef.current || '');
-    };
-  }, []);
-
-  const handleInputChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    setInputText(value);
+  const onSubmit: SubmitHandler<{ value: string }> = (data) => {
+    setData({ items: [], error: '', loading: true });
+    setInputText(data.value);
+    localStorage.setItem('search', data.value);
+    filterCharacters(data.value)
+      .then((characters) => setData({ items: characters.results, error: '', loading: false }))
+      .catch((err) => setData({ items: [], error: err.message, loading: false }));
   };
 
   return (
-    <div className="search__panel">
+    <form className="search__panel" onSubmit={handleSubmit(onSubmit)}>
       <input
         id="searchBar"
         className="search__bar"
-        name="searchBar"
         type="text"
         placeholder="Search.."
-        value={inputText ? inputText : ''}
-        onChange={handleInputChange}
+        defaultValue={inputText}
+        {...register('value')}
       />
-      <button className="btn search__btn">Search</button>
-    </div>
+      <button className="btn search__btn" type="submit">
+        Search
+      </button>
+    </form>
   );
 };
 
