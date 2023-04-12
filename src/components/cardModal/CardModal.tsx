@@ -31,7 +31,7 @@ const CardModal = (props: {
           <p>{character.location.name}</p>
           <p>{character.species}</p>
           <p>{new Date(character.created).toDateString()}</p>
-          <button className="close__modal" onClick={() => props.setOpen(false)}></button>
+          <span className="close__modal" onClick={() => props.setOpen(false)}></span>
         </div>
       ) : (
         <div>
