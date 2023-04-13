@@ -1,5 +1,6 @@
 import { SetStateAction } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useActions } from '../../hooks/actions';
 
 type IProps = {
   setInputText: React.Dispatch<SetStateAction<string>>;
@@ -7,13 +8,15 @@ type IProps = {
 };
 
 const SearchPanel = ({ inputText, setInputText }: IProps) => {
+  const { addSearchString } = useActions();
+
   const { register, handleSubmit } = useForm<{ value: string }>({
     mode: 'onSubmit',
   });
 
   const onSubmit: SubmitHandler<{ value: string }> = (data) => {
     setInputText(data.value);
-    localStorage.setItem('search', data.value);
+    addSearchString(data.value);
   };
 
   return (

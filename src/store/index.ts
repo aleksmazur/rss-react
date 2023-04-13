@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { publicApi } from './publicApi';
-import { formReducer } from './slice';
+import { formReducer } from './formSlice';
+import { searchReducer } from './searchSlice';
 
 const store = configureStore({
   reducer: {
     [publicApi.reducerPath]: publicApi.reducer,
     form: formReducer,
+    search: searchReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(publicApi.middleware),
