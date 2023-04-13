@@ -9,7 +9,7 @@ const CardItem = ({ id, image, name }: ICharacter) => {
 
   const clickHandler = (id: number) => {
     setOpen(true);
-    fetchChar(10000 + id);
+    fetchChar(id);
   };
 
   return (

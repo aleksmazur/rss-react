@@ -17,7 +17,8 @@ const CardModal = (props: {
         {isError && <div>Character not found</div>}
         {data && (
           <>
-            <h2 className="card__item-title">About {data.name}</h2>
+            <h4>About character</h4>
+            <h2 className="card__item-title">{data.name}</h2>
             <img src={data.image} alt="photo" className="card__img" />
             <div className="card__item-main">
               <div className="card__item-like">{data.species}</div>

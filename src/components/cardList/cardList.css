@@ -43,7 +43,8 @@
 }
 
 .card__item-title {
-    margin: 0.4rem 0;
+    margin: 0.4rem auto;
+    max-width: 260px;
     flex: 1 1 50%;
 }
 
