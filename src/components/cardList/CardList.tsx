@@ -1,19 +1,15 @@
-import { CaractersListState } from '../../types/types';
+import { ICharacter } from '../../types/types';
 import CardItem from '../cardItem/CardItem';
-import Preloader from '../preloader/Preloader';
 import './cardList.css';
 
-const CardList = (data: CaractersListState) => {
-  return data.items.length ? (
-    <div className="main__cards">
-      <div className="card__list">
-        {data.items.map((item) => {
-          return <CardItem {...item} key={item.id} />;
-        })}
-      </div>
+const CardList = (props: { chars: ICharacter[] }) => {
+  console.log(props.chars);
+  return (
+    <div className="card__list">
+      {props.chars.map((item) => {
+        return <CardItem {...item} key={item.id} />;
+      })}
     </div>
-  ) : (
-    <Preloader />
   );
 };
 

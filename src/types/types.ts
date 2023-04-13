@@ -93,14 +93,19 @@ export type FormInputs = {
   image: FileList;
 };
 
-type CharacterInfo = {
+export interface Response {
+  info: Info;
+  results: ICharacter[];
+}
+
+export interface Info {
   count: number;
   pages: number;
   next: string;
-  prev: null;
-};
+  prev: string;
+}
 
-export type CharacterResult = {
+export interface ICharacter {
   id: number;
   name: string;
   status: string;
@@ -119,22 +124,4 @@ export type CharacterResult = {
   episode: string[];
   url: string;
   created: string;
-  error?: string;
-};
-
-export type Characters = {
-  info: CharacterInfo;
-  results: CharacterResult[];
-  error?: string;
-};
-
-export type CaractersListState = {
-  items: CharacterResult[];
-  error: string;
-  loading: boolean;
-};
-
-export type CaracterIdState = {
-  char: CharacterResult;
-  error: string;
-};
+}

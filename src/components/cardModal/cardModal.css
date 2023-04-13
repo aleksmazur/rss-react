@@ -12,6 +12,8 @@
 
 .card__modal {
     position: relative;
+    min-width: 250px;
+    min-height: 250px;
     padding: 40px;
     background-color: rgba(0, 0, 0, 0.9);
     width: max-content;
