@@ -12,7 +12,7 @@
 }
 
 .alert__error {
-    opacity: 1;
+    opacity: 0;
 }
 
 .alert p {

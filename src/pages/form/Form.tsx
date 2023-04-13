@@ -1,24 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Alert from '../../components/alert/Alert';
 import FormCardItem from '../../components/formCardItem/CardItem';
 import FormItem from '../../components/form/FormItem';
 import { CardPropsType } from '../../types/types';
 import './form.css';
+import { useAppSelector } from '../../hooks/selectors';
 
 const Form = () => {
-  const [cards, addCards] = useState<CardPropsType[]>([]);
   const [success, setSuccess] = useState<boolean>(false);
-  const addCard = (card: CardPropsType) => {
-    addCards((prevState) => [...prevState, card]);
-    setSuccess(true);
+  const { cards } = useAppSelector((state) => state.form);
+
+  useEffect(() => {
     setTimeout(() => {
       setSuccess(false);
     }, 2000);
-  };
+  }, [cards]);
 
   return (
     <>
-      <FormItem addCard={(card: CardPropsType) => addCard(card)} />
+      <FormItem setSuccess={setSuccess} />
       <Alert success={success} />
       <div className="card__list">
         {cards.map((item: CardPropsType, index: number) => {

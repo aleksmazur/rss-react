@@ -54,7 +54,6 @@ C84.22,38.589,83.329,41.596,81.643,44.248z"
       <div className="card__item-about">
         <p>{raiting}/5</p>
       </div>
-      <button>See more</button>
     </div>
   );
 };

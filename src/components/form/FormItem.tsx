@@ -1,17 +1,21 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { FormInputs, TypePropsForm } from '../../types/types';
+import { FormInputs } from '../../types/types';
 import './formItem.css';
 import './checkbox.css';
 import './switcher.css';
 import './otherInput.css';
+import { useActions } from '../../hooks/actions';
+import { SetStateAction } from 'react';
 
-const FormItem = ({ addCard }: TypePropsForm) => {
+const FormItem = (props: { setSuccess: React.Dispatch<SetStateAction<boolean>> }) => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<FormInputs>({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+
+  const { addCard } = useActions();
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
     const card = {
@@ -25,6 +29,7 @@ const FormItem = ({ addCard }: TypePropsForm) => {
       img: URL.createObjectURL(data.image[0]),
     };
     addCard(card);
+    props.setSuccess(true);
     reset();
   };
 
