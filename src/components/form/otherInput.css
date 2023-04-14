@@ -1,0 +1,32 @@
+input[type="month"]{
+    background-color: rgb(246, 246, 246);
+    padding: 8px;
+    color: rgb(0, 0, 0);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+::-webkit-calendar-picker-indicator{
+    background-color:  rgb(246, 246, 246);
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+input::file-selector-button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.2em 0.6em;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: all 0.4s;
+    outline: 0;
+}
+input::file-selector-button:hover {
+    border-color: rgb(207, 142, 23);
+    color: rgb(207, 142, 23);
+    background-color: #1a1a1a
+}

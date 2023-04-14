@@ -1,0 +1,50 @@
+.modal__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 100;
+    opacity: 1;
+    visibility: visible;
+    height: 100vh;
+}
+
+.card__modal {
+    position: relative;
+    min-width: 260px;
+    min-height: 260px;
+    padding: 40px;
+    background-color: rgba(0, 0, 0, 0.9);
+    width: max-content;
+    height: max-content;
+    margin: 20% auto;
+    border-radius: 8px;
+}
+
+.close__modal {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+}
+
+.close__modal::before,
+.close__modal::after {
+    position: absolute;
+    left: 10px;
+    content: " ";
+    height: 26px;
+    width: 2px;
+    background-color: rgba(253, 253, 253, 0.9);
+}
+
+.close__modal::before {
+    transform: rotate(45deg);
+}
+
+.close__modal::after {
+    transform: rotate(-45deg);   
+}

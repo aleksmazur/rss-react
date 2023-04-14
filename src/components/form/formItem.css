@@ -1,0 +1,56 @@
+.addPlant__form {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    align-items: flex-start;
+    background-color: rgba(0, 0, 0, .7);
+    padding: 10px;
+    border-radius: 8px;
+    gap: 10px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.addPlant__form label, .care__form-section {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.addPlant__form input, .addPlant__form select, .addPlant__form textarea {
+    border-radius: 4px;
+    border: none;
+    padding: 0.4rem;
+    outline: 0;
+}
+
+.addPlant__form button {
+    margin: 0 auto;
+}
+
+option:hover {
+    background-color: rgb(157, 104, 7);
+}
+
+.form__section-care, .switch {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.form__section-care p, .switch p {
+    margin: 0;
+    text-align: left;
+}
+
+.form__checkbox-group, .form__radio-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.care__form-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
