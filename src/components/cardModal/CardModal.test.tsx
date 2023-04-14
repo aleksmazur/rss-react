@@ -1,10 +1,16 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import store from '../../store';
 import { character } from '../../test/api/mockCharacters';
 import CardItem from '../cardItem/CardItem';
 
 describe('Card Modal', () => {
   it('display Card Modal', async () => {
-    render(<CardItem {...character} />);
+    render(
+      <Provider store={store}>
+        <CardItem {...character} />
+      </Provider>
+    );
     await waitFor(() => {
       fireEvent.click(screen.getByRole('button', { name: /See more/i }));
     });
@@ -12,7 +18,11 @@ describe('Card Modal', () => {
   });
 
   it('close Card Modal', async () => {
-    render(<CardItem {...character} />);
+    render(
+      <Provider store={store}>
+        <CardItem {...character} />
+      </Provider>
+    );
     const button = screen.getByRole('button', { name: /See more/i });
     await waitFor(() => {
       fireEvent.click(button);

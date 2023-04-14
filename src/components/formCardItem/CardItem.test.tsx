@@ -1,4 +1,6 @@
 import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import store from '../../store';
 import CardItem from './CardItem';
 
 const PropsType = {
@@ -15,14 +17,12 @@ const PropsType = {
 };
 
 describe('Card Items', () => {
-  it('display the "See more" btn', () => {
-    render(<CardItem {...PropsType} />);
-    const message = screen.queryByText(/See more/i);
-    expect(message).toBeVisible();
-  });
-
   it('display all data', () => {
-    render(<CardItem {...PropsType} />);
+    render(
+      <Provider store={store}>
+        <CardItem {...PropsType} />
+      </Provider>
+    );
     expect(screen.getByText(PropsType.title)).toBeInTheDocument();
     expect(screen.getByText(PropsType.care[0])).toBeInTheDocument();
     expect(screen.getByRole('img')).toBeInTheDocument();

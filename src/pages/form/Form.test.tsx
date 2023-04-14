@@ -1,10 +1,16 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
+import store from '../../store';
 import Form from './Form';
 
 describe('Form Page', () => {
   it('Display the correct title', () => {
-    render(<Form />);
+    render(
+      <Provider store={store}>
+        <Form />
+      </Provider>
+    );
     const message = screen.queryByText(/Add new Plant/i);
     expect(message).toBeVisible();
   });
@@ -12,7 +18,11 @@ describe('Form Page', () => {
   it('Display the correct success message', async () => {
     window.URL.createObjectURL = vi.fn();
     const image = new File([''], 'picture.jpeg', { type: 'image/jpeg' });
-    const { container } = render(<Form />);
+    const { container } = render(
+      <Provider store={store}>
+        <Form />
+      </Provider>
+    );
     const input = screen.getByLabelText(/image/i);
     await userEvent.upload(input, image);
     fireEvent.change(screen.getAllByRole('textbox')[0], { target: { value: 'Test' } });
