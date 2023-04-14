@@ -1,21 +1,16 @@
-import { SetStateAction } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useActions } from '../../hooks/actions';
+import { useAppSelector } from '../../hooks/selectors';
 
-type IProps = {
-  setInputText: React.Dispatch<SetStateAction<string>>;
-  inputText: string;
-};
-
-const SearchPanel = ({ inputText, setInputText }: IProps) => {
+const SearchPanel = () => {
   const { addSearchString } = useActions();
+  const { search } = useAppSelector((state) => state.search);
 
   const { register, handleSubmit } = useForm<{ value: string }>({
     mode: 'onSubmit',
   });
 
   const onSubmit: SubmitHandler<{ value: string }> = (data) => {
-    setInputText(data.value);
     addSearchString(data.value);
   };
 
@@ -26,7 +21,7 @@ const SearchPanel = ({ inputText, setInputText }: IProps) => {
         className="search__bar"
         type="text"
         placeholder="Search.."
-        defaultValue={inputText}
+        defaultValue={search}
         {...register('value')}
       />
       <button className="btn search__btn" type="submit">

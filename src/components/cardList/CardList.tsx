@@ -3,7 +3,6 @@ import CardItem from '../cardItem/CardItem';
 import './cardList.css';
 
 const CardList = (props: { chars: ICharacter[] }) => {
-  console.log(props.chars);
   return (
     <div className="card__list">
       {props.chars.map((item) => {
