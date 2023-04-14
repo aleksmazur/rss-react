@@ -1,9 +1,8 @@
 import logo from '../../assets/img/logo.webp';
 import { NavLink } from 'react-router-dom';
 import Nav from '../nav/Nav';
-import { PropsTypeHeader } from '../../types/types';
 
-const Header = (props: PropsTypeHeader) => {
+const Header = (props: { title: string }) => {
   return (
     <div className="header">
       <NavLink to={'/'}>

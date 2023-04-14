@@ -11,10 +11,6 @@ export type CardPropsType = {
   like?: boolean | undefined;
 };
 
-export type PropsTypeHeader = {
-  title: string;
-};
-
 export type RoutePropsType = {
   path: string;
   title: string;
